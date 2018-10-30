@@ -1,0 +1,873 @@
+Flat profile:
+
+Each sample counts as 0.001 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 37.64     49.18    49.18                             NNLayer::print_activation()
+ 31.53     90.37    41.20   774225     0.00     0.00  NNLayer::propagate(short*)
+ 13.12    107.51    17.14                             altera_avalon_jtag_uart_timeout
+  7.99    117.95    10.44       45     0.23     0.23  altera_avalon_jtag_uart_irq
+  5.67    125.35     7.40  4274716     0.00     0.00  __adddf3
+  2.60    128.74     3.39        1     3.39     5.60  Image::apply_NN(NN*, int, int)
+  0.64    129.58     0.84  2228175     0.00     0.00  Image::source_pixel(int, int)
+  0.23    129.87     0.30        1     0.30     0.31  Image::make_bw()
+  0.19    130.12     0.24    11741     0.00     0.00  Image::Get_Fractal_Level(float, float)
+  0.10    130.25     0.13                             Image::make_fractal()
+  0.06    130.33     0.08     8325     0.00     0.00  NN::getMaxOutputIndex()
+  0.04    130.37     0.05        3     0.02     0.02  Image::printToScreen(int, int, VGA*)
+  0.02    130.41     0.03        1     0.03     0.03  alt_tick
+  0.02    130.44     0.03        1     0.03     0.03  NN::NN(int)
+  0.02    130.46     0.03        1     0.03     0.35  main
+  0.02    130.48     0.02    20526     0.00     0.00  ___vfprintf_internal_r
+  0.02    130.50     0.02                             NNLayer::print()
+  0.01    130.52     0.02        1     0.02     0.02  Image::Get_Fractal_Color(int)
+  0.01    130.53     0.01                             __ieee754_log
+  0.01    130.55     0.01      580     0.00     0.00  __subdf3
+  0.01    130.56     0.01    11741     0.00     0.00  Image::randomize()
+  0.01    130.57     0.01        3     0.00     0.00  NNLayer::random_init(int, int)
+  0.01    130.58     0.01    20766     0.00     0.00  __umoddi3
+  0.00    130.59     0.01                             _do_dtors
+  0.00    130.59     0.01    32325     0.00     0.00  VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int)
+  0.00    130.60     0.01     5620     0.00     0.00  __muldf3
+  0.00    130.61     0.01     4410     0.00     0.00  _Unwind_RaiseException_Phase2
+  0.00    130.61     0.00    24660     0.00     0.00  NNLayer::makeTernaryExtra(float)
+  0.00    130.61     0.00        2     0.00     0.00  NNLayer::make_ternary()
+  0.00    130.62     0.00                             vector_weight(int)
+  0.00    130.62     0.00                             __lshift
+  0.00    130.62     0.00      559     0.00     0.00  __pow5mult
+  0.00    130.62     0.00                             alt_dev_null_write
+  0.00    130.62     0.00      940     0.00     0.00  ___vfiprintf_internal_r
+  0.00    130.62     0.00      375     0.00     0.00  __smakebuf_r
+  0.00    130.62     0.00      280     0.00     0.00  __divdf3
+  0.00    130.63     0.00      197     0.00     0.00  __udivdi3
+  0.00    130.63     0.00      194     0.00     0.00  __multiply
+  0.00    130.63     0.00      191     0.00     0.00  alt_dev_llist_insert
+  0.00    130.63     0.00      190     0.00     0.00  _malloc_trim_r
+  0.00    130.63     0.00      189     0.00     0.00  _dtoa_r
+  0.00    130.63     0.00      187     0.00     0.00  strcmp
+  0.00    130.63     0.00                             NNLayer::~NNLayer()
+  0.00    130.63     0.00                             __eqdf2
+  0.00    130.63     0.00                             __floatsidf
+  0.00    130.63     0.00                             __floatunsidf
+  0.00    130.64     0.00                             _printf_r
+  0.00    130.64     0.00                             alt_load_section
+  0.00    130.64     0.00                             _do_ctors
+  0.00    130.64     0.00                             Image::print()
+  0.00    130.64     0.00                             close
+  0.00    130.64     0.00                             _exit
+  0.00    130.64     0.00                             __umodsi3
+  0.00    130.64     0.00   130831     0.00     0.00  altera_avalon_jtag_uart_read
+  0.00    130.64     0.00   130821     0.00     0.00  alt_irq_handler
+  0.00    130.64     0.00   130641     0.00     0.00  alt_ic_irq_enable
+  0.00    130.64     0.00      774     0.00     0.00  _malloc_r
+  0.00    130.64     0.00      514     0.00     0.00  altera_avalon_jtag_uart_write
+  0.00    130.64     0.00      441     0.00     0.00  kill
+  0.00    130.64     0.00      375     0.00     0.00  __s2b
+  0.00    130.64     0.00      180     0.00     0.00  _Unwind_GetGR
+  0.00    130.64     0.00       50     0.00     0.00  _Unwind_ForcedUnwind_Phase2
+  0.00    130.64     0.00       18     0.00     0.00  operator new[](unsigned int)
+  0.00    130.64     0.00       16     0.00     0.00  __cxa_allocate_exception
+  0.00    130.64     0.00       13     0.00     0.00  __sfvwrite_r
+  0.00    130.64     0.00        6     0.00     0.00  NNLayer::init(int, int)
+  0.00    130.64     0.00        6     0.00     0.00  altera_avalon_jtag_uart_ioctl
+  0.00    130.64     0.00        5     0.00     0.00  alt_icache_flush
+  0.00    130.64     0.00        5     0.00     0.00  alt_open_fd
+  0.00    130.64     0.00        4     0.00     0.00  __sigtramp_r
+  0.00    130.64     0.00        4     0.00     0.00  alt_find_file
+  0.00    130.64     0.00        3     0.00     0.00  alt_alarm_stop
+  0.00    130.64     0.00        3     0.00     0.00  alt_avalon_timer_sc_init
+  0.00    130.64     0.00        3     0.00     0.00  alt_get_fd
+  0.00    130.64     0.00        2     0.00     0.00  Image::Image(int, int)
+  0.00    130.64     0.00        2     0.00     0.00  __cxxabiv1::__si_class_type_info::__do_dyncast(int, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const
+  0.00    130.64     0.00        2     0.00     0.00  _free_r
+  0.00    130.64     0.00        2     0.00     0.00  _start
+  0.00    130.64     0.00        2     0.00     0.00  alt_get_errno
+  0.00    130.64     0.00        2     0.00     0.00  alt_ic_irq_disable
+  0.00    130.64     0.00        2     0.00     0.00  alt_ic_irq_enabled
+  0.00    130.64     0.00        2     0.00     0.00  alt_iic_isr_register
+  0.00    130.64     0.00        2     0.00     0.00  open
+  0.00    130.64     0.00        2     0.00     0.00  strlen
+  0.00    130.64     0.00        1     0.00     0.00  read_sleb128(unsigned char const*, long*)
+  0.00    130.64     0.00        1     0.00     0.00  get_adjusted_ptr(std::type_info const*, std::type_info const*, void**)
+  0.00    130.64     0.00        1     0.00     0.00  Image::~Image()
+  0.00    130.64     0.00        1     0.00     0.00  __cxa_allocate_dependent_exception
+  0.00    130.64     0.00        1     0.00     0.00  alt_avalon_timer_sc_irq
+  0.00    130.64     0.00        1     0.00     0.00  alt_file_locked
+  0.00    130.64     0.00        1     0.00     0.00  altera_avalon_jtag_uart_init
+  0.00    130.64     0.00        1     0.00     0.00  memcmp
+  0.00    130.64     0.00        1     0.00     0.00  memmove
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 32 byte(s) for 0.00% of 130.64 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     68.2   49.18   39.87                 NNLayer::print_activation() [1]
+               39.87    0.00  749250/774225      NNLayer::propagate(short*) [2]
+-----------------------------------------------
+                1.33    0.00   24975/774225      NN::getMaxOutputIndex() [12]
+               39.87    0.00  749250/774225      NNLayer::print_activation() [1]
+[2]     31.5   41.20    0.00  774225         NNLayer::propagate(short*) [2]
+-----------------------------------------------
+[3]     18.4   21.41    2.59  160353+4482836 <cycle 1 as a whole> [3]
+               10.44    0.00      45             altera_avalon_jtag_uart_irq <cycle 1> [7]
+                7.40    0.00 4274716             __adddf3 <cycle 1> [8]
+                3.39    2.21       1             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                0.03    0.32       1             main <cycle 1> [15]
+                0.05    0.01       3             Image::printToScreen(int, int, VGA*) <cycle 1> [23]
+                0.00    0.03     774             _malloc_r <cycle 1> [24]
+                0.03    0.00       1             NN::NN(int) <cycle 1> [26]
+                0.02    0.00   20526+561         ___vfprintf_internal_r <cycle 1> [27]
+                0.01    0.00     580             __subdf3 <cycle 1> [31]
+                0.01    0.00       3             NNLayer::random_init(int, int) <cycle 1> [32]
+                0.01    0.00   20766             __umoddi3 <cycle 1> [33]
+                0.00    0.00       2             NNLayer::make_ternary() <cycle 1> [34]
+                0.01    0.00   32325             VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+                0.01    0.00    4410             _Unwind_RaiseException_Phase2 <cycle 1> [38]
+                0.00    0.00   24660             NNLayer::makeTernaryExtra(float) <cycle 1> [39]
+                0.00    0.00     197+3           __udivdi3 <cycle 1> [48]
+                0.00    0.00  130831             altera_avalon_jtag_uart_read <cycle 1> [49]
+                0.00    0.00     940             ___vfiprintf_internal_r <cycle 1> [52]
+                0.00    0.00     375             __smakebuf_r <cycle 1> [53]
+                0.00    0.00     189             _dtoa_r <cycle 1> [55]
+                0.00    0.00     187             strcmp <cycle 1> [51]
+                0.00    0.00  130641             alt_ic_irq_enable <cycle 1> [72]
+                0.00    0.00     514             altera_avalon_jtag_uart_write <cycle 1> [73]
+                0.00    0.00     441             kill <cycle 1> [74]
+                0.00    0.00      18             operator new[](unsigned int) <cycle 1> [156]
+                0.00    0.00      16             __cxa_allocate_exception <cycle 1> [157]
+                0.00    0.00      13             __sfvwrite_r <cycle 1> [158]
+                0.00    0.00       4             alt_find_file <cycle 1> [78]
+                0.00    0.00       2+1           open <cycle 1> [86]
+                0.00    0.00       3             alt_alarm_stop <cycle 1> [79]
+                0.00    0.00       2             strlen <cycle 1> [87]
+                0.00    0.00       2             _free_r <cycle 1> [163]
+                0.00    0.00       1             alt_file_locked <cycle 1> [89]
+-----------------------------------------------
+                0.00   19.58  130821/130821      alt_exception [5]
+[4]     15.0    0.00   19.58  130821         alt_irq_handler [4]
+               17.45    2.11  130640/160353      alt_ic_irq_enable <cycle 1> [72]
+                0.03    0.00     188/160353      altera_avalon_jtag_uart_write <cycle 1> [73]
+                0.00    0.00       1/160353      altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       1/5           alt_icache_flush [76]
+                0.00    0.00       1/5           alt_open_fd [77]
+                0.00    0.00       1/1           altera_avalon_jtag_uart_init [90]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     15.0    0.00   19.58                 alt_exception [5]
+                0.00   19.58  130821/130821      alt_irq_handler [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]     13.1   17.14    0.00                 altera_avalon_jtag_uart_timeout [6]
+-----------------------------------------------
+                                   1             VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+                                   4             __sfvwrite_r <cycle 1> [158]
+                                  18             _malloc_r <cycle 1> [24]
+                0.00    0.00       1/160353      alt_irq_handler [4]
+                0.00    0.00       1/160353      VGA::VGA(int, int) [63]
+                0.00    0.00       1/160353      memset [62]
+                0.00    0.00       2/160353      _raise_r [64]
+                0.00    0.00      17/160353      _puts_r [41]
+[7]      8.0   10.44    0.00      45         altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       2/194         __multiply [56]
+                0.00    0.00       2/2           alt_ic_irq_enabled [84]
+                0.00    0.00       1/5           alt_icache_flush [76]
+                0.00    0.00       1/1           memcmp [91]
+                0.00    0.00       1/2           alt_iic_isr_register [85]
+                0.00    0.00       1/6           altera_avalon_jtag_uart_ioctl [75]
+                                   2             altera_avalon_jtag_uart_write <cycle 1> [73]
+                                   1             alt_file_locked <cycle 1> [89]
+                                   1             main <cycle 1> [15]
+-----------------------------------------------
+                                1764             __umoddi3 <cycle 1> [33]
+                                1764             kill <cycle 1> [74]
+                             4262400             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                0.01    0.00     100/160353      __fpclassifyd [30]
+                0.09    0.01     680/160353      __ieee754_log [14]
+                0.15    0.02    1120/160353      __gtdf2 [22]
+                0.15    0.02    1120/160353      __eqdf2 [21]
+                0.24    0.03    1764/160353      __floatunsidf [19]
+                0.24    0.03    1764/160353      alt_load_section [18]
+                0.30    0.04    2240/160353      __divdf3 [16]
+[8]      5.7    7.40    0.00 4274716         __adddf3 <cycle 1> [8]
+                0.00    0.00     300/5620        __muldf3 [37]
+                                 400             __subdf3 <cycle 1> [31]
+-----------------------------------------------
+                                   1             main <cycle 1> [15]
+[9]      4.3    3.39    2.21       1         Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                0.08    1.33    8325/8325        NN::getMaxOutputIndex() [12]
+                0.80    0.00 2139525/2228175     Image::source_pixel(int, int) [13]
+                0.00    0.00       1/2           _start [164]
+                             4262400             __adddf3 <cycle 1> [8]
+                                 185             strcmp <cycle 1> [51]
+                                   2             _malloc_r <cycle 1> [24]
+                                   1             operator new[](unsigned int) <cycle 1> [156]
+                                   1             __cxa_allocate_exception <cycle 1> [157]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     2.6    0.13    3.31                 Image::make_fractal() [10]
+                0.01    3.05   11741/11741       Image::randomize() [11]
+                0.24    0.00   11741/11741       Image::Get_Fractal_Level(float, float) [20]
+                0.00    0.00   12000/2228175     Image::source_pixel(int, int) [13]
+-----------------------------------------------
+                0.01    3.05   11741/11741       Image::make_fractal() [10]
+[11]     2.3    0.01    3.05   11741         Image::randomize() [11]
+                2.71    0.33   20325/160353      ___vfprintf_internal_r <cycle 1> [27]
+                0.01    0.00   20325/2228175     Image::source_pixel(int, int) [13]
+-----------------------------------------------
+                0.08    1.33    8325/8325        Image::apply_NN(NN*, int, int) <cycle 1> [9]
+[12]     1.1    0.08    1.33    8325         NN::getMaxOutputIndex() [12]
+                1.33    0.00   24975/774225      NNLayer::propagate(short*) [2]
+-----------------------------------------------
+                0.00    0.00   12000/2228175     Image::make_fractal() [10]
+                0.01    0.00   20325/2228175     Image::randomize() [11]
+                0.01    0.00   24000/2228175     Image::make_bw() [17]
+                0.01    0.00   32325/2228175     Image::printToScreen(int, int, VGA*) <cycle 1> [23]
+                0.80    0.00 2139525/2228175     Image::apply_NN(NN*, int, int) <cycle 1> [9]
+[13]     0.6    0.84    0.00 2228175         Image::source_pixel(int, int) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     0.4    0.01    0.49                 __ieee754_log [14]
+                0.00    0.34     280/280         __divdf3 [16]
+                0.09    0.01     680/160353      __adddf3 <cycle 1> [8]
+                0.02    0.00     180/160353      __subdf3 <cycle 1> [31]
+                0.02    0.00     180/160353      _Unwind_RaiseException_Phase2 <cycle 1> [38]
+                0.00    0.00    1220/5620        __muldf3 [37]
+-----------------------------------------------
+                                   1             altera_avalon_jtag_uart_irq <cycle 1> [7]
+[15]     0.3    0.03    0.32       1         main <cycle 1> [15]
+                0.30    0.01       1/1           Image::make_bw() [17]
+                0.02    0.00       1/1           Image::Get_Fractal_Color(int) [29]
+                0.00    0.00       1/2           _start [164]
+                0.00    0.00       1/1           read_sleb128(unsigned char const*, long*) [165]
+                0.00    0.00       1/1           get_adjusted_ptr(std::type_info const*, std::type_info const*, void**) [166]
+                                   3             Image::printToScreen(int, int, VGA*) <cycle 1> [23]
+                                   3             NNLayer::random_init(int, int) <cycle 1> [32]
+                                   2             NNLayer::make_ternary() <cycle 1> [34]
+                                   2             strlen <cycle 1> [87]
+                                   2             ___vfprintf_internal_r <cycle 1> [27]
+                                   1             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                                   1             operator new[](unsigned int) <cycle 1> [156]
+                                   1             strcmp <cycle 1> [51]
+                                   1             NN::NN(int) <cycle 1> [26]
+                                   1             _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                0.00    0.34     280/280         __ieee754_log [14]
+[16]     0.3    0.00    0.34     280         __divdf3 [16]
+                0.30    0.04    2240/160353      __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                0.30    0.01       1/1           main <cycle 1> [15]
+[17]     0.2    0.30    0.01       1         Image::make_bw() [17]
+                0.01    0.00   24000/2228175     Image::source_pixel(int, int) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.2    0.00    0.26                 alt_load_section [18]
+                0.24    0.03    1764/160353      __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     0.2    0.00    0.26                 __floatunsidf [19]
+                0.24    0.03    1764/160353      __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                0.24    0.00   11741/11741       Image::make_fractal() [10]
+[20]     0.2    0.24    0.00   11741         Image::Get_Fractal_Level(float, float) [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     0.1    0.00    0.17                 __eqdf2 [21]
+                0.15    0.02    1120/160353      __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     0.1    0.00    0.17                 __gtdf2 [22]
+                0.15    0.02    1120/160353      __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                                   3             main <cycle 1> [15]
+[23]     0.0    0.05    0.01       3         Image::printToScreen(int, int, VGA*) <cycle 1> [23]
+                0.01    0.00   32325/2228175     Image::source_pixel(int, int) [13]
+                               32325             VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+-----------------------------------------------
+                                   1             VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+                                   1             NN::NN(int) <cycle 1> [26]
+                                   1             main <cycle 1> [15]
+                                   2             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                                  32             __cxa_allocate_exception <cycle 1> [157]
+                                  36             operator new[](unsigned int) <cycle 1> [156]
+                                 300             __subdf3 <cycle 1> [31]
+                                 398             _Unwind_RaiseException_Phase2 <cycle 1> [38]
+                0.00    0.00       1/160353      VGA::send_to_display() [70]
+                0.00    0.00       1/160353      VGA::VGA(int, int) [63]
+                0.00    0.00       1/160353      NN::~NN() [69]
+[24]     0.0    0.00    0.03     774         _malloc_r <cycle 1> [24]
+                0.03    0.00       1/1           alt_tick [25]
+                0.00    0.00       1/1           memmove [44]
+                                  18             altera_avalon_jtag_uart_irq <cycle 1> [7]
+                                   1             _free_r <cycle 1> [163]
+                                   1             _dtoa_r <cycle 1> [55]
+-----------------------------------------------
+                0.03    0.00       1/1           _malloc_r <cycle 1> [24]
+[25]     0.0    0.03    0.00       1         alt_tick [25]
+-----------------------------------------------
+                                   1             main <cycle 1> [15]
+[26]     0.0    0.03    0.00       1         NN::NN(int) <cycle 1> [26]
+                0.00    0.00       3/6           NNLayer::init(int, int) [159]
+                                   1             __cxa_allocate_exception <cycle 1> [157]
+                                   1             _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                                 561             ___vfprintf_internal_r <cycle 1> [27]
+                                   2             strlen <cycle 1> [87]
+                                   2             main <cycle 1> [15]
+                                   3             alt_find_file <cycle 1> [78]
+                                 187             strcmp <cycle 1> [51]
+                0.00    0.00       3/160353      printf [65]
+                0.00    0.00       4/160353      memset [62]
+                2.71    0.33   20325/160353      Image::randomize() [11]
+[27]     0.0    0.02    0.00   20526+561     ___vfprintf_internal_r <cycle 1> [27]
+                0.00    0.00     187/190         _malloc_trim_r [54]
+                0.00    0.00     374/375         __s2b [153]
+                               20766             __umoddi3 <cycle 1> [33]
+                                 746             ___vfiprintf_internal_r <cycle 1> [52]
+                                 441             kill <cycle 1> [74]
+                                   2             __smakebuf_r <cycle 1> [53]
+                                 561             ___vfprintf_internal_r <cycle 1> [27]
+-----------------------------------------------
+                                                 <spontaneous>
+[28]     0.0    0.02    0.00                 NNLayer::print() [28]
+-----------------------------------------------
+                0.02    0.00       1/1           main <cycle 1> [15]
+[29]     0.0    0.02    0.00       1         Image::Get_Fractal_Color(int) [29]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.0    0.00    0.02                 __fpclassifyd [30]
+                0.01    0.00     100/160353      __adddf3 <cycle 1> [8]
+                0.00    0.00     100/5620        __muldf3 [37]
+-----------------------------------------------
+                                 400             __adddf3 <cycle 1> [8]
+                0.02    0.00     180/160353      __ieee754_log [14]
+[31]     0.0    0.01    0.00     580         __subdf3 <cycle 1> [31]
+                                 300             _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                                   3             main <cycle 1> [15]
+[32]     0.0    0.01    0.00       3         NNLayer::random_init(int, int) <cycle 1> [32]
+                0.00    0.00     180/180         _Unwind_GetGR [154]
+                0.00    0.00       3/6           NNLayer::init(int, int) [159]
+                               24660             NNLayer::makeTernaryExtra(float) <cycle 1> [39]
+                                 180             _Unwind_RaiseException_Phase2 <cycle 1> [38]
+                                   3             __cxa_allocate_exception <cycle 1> [157]
+-----------------------------------------------
+                               20766             ___vfprintf_internal_r <cycle 1> [27]
+[33]     0.0    0.01    0.00   20766         __umoddi3 <cycle 1> [33]
+                                1764             __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                                   2             main <cycle 1> [15]
+[34]     0.0    0.00    0.00       2         NNLayer::make_ternary() <cycle 1> [34]
+                0.00    0.00    4000/5620        __muldf3 [37]
+                0.00    0.00      50/50          _Unwind_ForcedUnwind_Phase2 [155]
+                                4050             _Unwind_RaiseException_Phase2 <cycle 1> [38]
+-----------------------------------------------
+                                                 <spontaneous>
+[35]     0.0    0.01    0.00                 _do_dtors [35]
+-----------------------------------------------
+                               32325             Image::printToScreen(int, int, VGA*) <cycle 1> [23]
+[36]     0.0    0.01    0.00   32325         VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+                0.00    0.00       1/2           __cxxabiv1::__si_class_type_info::__do_dyncast(int, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [162]
+                0.00    0.00       1/1           __cxa_allocate_dependent_exception [168]
+                                   1             __sfvwrite_r <cycle 1> [158]
+                                   1             _malloc_r <cycle 1> [24]
+                                   1             altera_avalon_jtag_uart_irq <cycle 1> [7]
+-----------------------------------------------
+                0.00    0.00     100/5620        __fpclassifyd [30]
+                0.00    0.00     300/5620        __adddf3 <cycle 1> [8]
+                0.00    0.00    1220/5620        __ieee754_log [14]
+                0.00    0.00    4000/5620        NNLayer::make_ternary() <cycle 1> [34]
+[37]     0.0    0.01    0.00    5620         __muldf3 [37]
+-----------------------------------------------
+                                 180             NNLayer::random_init(int, int) <cycle 1> [32]
+                                4050             NNLayer::make_ternary() <cycle 1> [34]
+                0.02    0.00     180/160353      __ieee754_log [14]
+[38]     0.0    0.01    0.00    4410         _Unwind_RaiseException_Phase2 <cycle 1> [38]
+                                 398             _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                               24660             NNLayer::random_init(int, int) <cycle 1> [32]
+[39]     0.0    0.00    0.00   24660         NNLayer::makeTernaryExtra(float) <cycle 1> [39]
+                                   3             __cxa_allocate_exception <cycle 1> [157]
+-----------------------------------------------
+                                                 <spontaneous>
+[40]     0.0    0.00    0.00                 vector_weight(int) [40]
+-----------------------------------------------
+                                                 <spontaneous>
+[41]     0.0    0.00    0.00                 _puts_r [41]
+                0.00    0.00      17/160353      altera_avalon_jtag_uart_irq <cycle 1> [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[42]     0.0    0.00    0.00                 __lshift [42]
+-----------------------------------------------
+                                                 <spontaneous>
+[43]     0.0    0.00    0.00                 _do_ctors [43]
+                0.00    0.00     192/194         __multiply [56]
+-----------------------------------------------
+                0.00    0.00       1/1           _malloc_r <cycle 1> [24]
+[44]     0.0    0.00    0.00       1         memmove [44]
+                0.00    0.00     559/559         __pow5mult [45]
+-----------------------------------------------
+                0.00    0.00     559/559         memmove [44]
+[45]     0.0    0.00    0.00     559         __pow5mult [45]
+-----------------------------------------------
+                                                 <spontaneous>
+[46]     0.0    0.00    0.00                 alt_dev_null_write [46]
+-----------------------------------------------
+                                                 <spontaneous>
+[47]     0.0    0.00    0.00                 _Balloc [47]
+                0.00    0.00       6/160353      __udivdi3 <cycle 1> [48]
+                0.00    0.00       2/160353      __sfvwrite_r <cycle 1> [158]
+-----------------------------------------------
+                                   3             __udivdi3 <cycle 1> [48]
+                                   4             __smakebuf_r <cycle 1> [53]
+                                 187             _free_r <cycle 1> [163]
+                0.00    0.00       6/160353      _Balloc [47]
+[48]     0.0    0.00    0.00     197+3       __udivdi3 <cycle 1> [48]
+                0.00    0.00       3/190         _malloc_trim_r [54]
+                                 191             altera_avalon_jtag_uart_read <cycle 1> [49]
+                                   6             __sfvwrite_r <cycle 1> [158]
+                                   3             ___vfiprintf_internal_r <cycle 1> [52]
+                                   3             alt_alarm_stop <cycle 1> [79]
+                                   3             __udivdi3 <cycle 1> [48]
+-----------------------------------------------
+                                 191             __udivdi3 <cycle 1> [48]
+                              130640             alt_ic_irq_enable <cycle 1> [72]
+[49]     0.0    0.00    0.00  130831         altera_avalon_jtag_uart_read <cycle 1> [49]
+                0.00    0.00     191/191         alt_dev_llist_insert [50]
+                                 321             altera_avalon_jtag_uart_write <cycle 1> [73]
+-----------------------------------------------
+                0.00    0.00     191/191         altera_avalon_jtag_uart_read <cycle 1> [49]
+[50]     0.0    0.00    0.00     191         alt_dev_llist_insert [50]
+-----------------------------------------------
+                                   1             main <cycle 1> [15]
+                                 185             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                0.00    0.00       1/160353      VGA::VGA(int, int) [63]
+[51]     0.0    0.00    0.00     187         strcmp <cycle 1> [51]
+                                 187             ___vfprintf_internal_r <cycle 1> [27]
+                                 187             _dtoa_r <cycle 1> [55]
+-----------------------------------------------
+                                   3             __udivdi3 <cycle 1> [48]
+                                   4             __smakebuf_r <cycle 1> [53]
+                                 187             _free_r <cycle 1> [163]
+                                 746             ___vfprintf_internal_r <cycle 1> [27]
+[52]     0.0    0.00    0.00     940         ___vfiprintf_internal_r <cycle 1> [52]
+                                 373             __smakebuf_r <cycle 1> [53]
+-----------------------------------------------
+                                   2             ___vfprintf_internal_r <cycle 1> [27]
+                                 373             ___vfiprintf_internal_r <cycle 1> [52]
+[53]     0.0    0.00    0.00     375         __smakebuf_r <cycle 1> [53]
+                                   4             __udivdi3 <cycle 1> [48]
+                                   4             ___vfiprintf_internal_r <cycle 1> [52]
+                                   1             _dtoa_r <cycle 1> [55]
+-----------------------------------------------
+                0.00    0.00       3/190         __udivdi3 <cycle 1> [48]
+                0.00    0.00     187/190         ___vfprintf_internal_r <cycle 1> [27]
+[54]     0.0    0.00    0.00     190         _malloc_trim_r [54]
+-----------------------------------------------
+                                   1             __smakebuf_r <cycle 1> [53]
+                                   1             _malloc_r <cycle 1> [24]
+                                 187             strcmp <cycle 1> [51]
+[55]     0.0    0.00    0.00     189         _dtoa_r <cycle 1> [55]
+                0.00    0.00       1/2           alt_iic_isr_register [85]
+                0.00    0.00       1/375         __s2b [153]
+                                   1             _free_r <cycle 1> [163]
+                                   1             __sfvwrite_r <cycle 1> [158]
+-----------------------------------------------
+                0.00    0.00       2/194         altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00     192/194         _do_ctors [43]
+[56]     0.0    0.00    0.00     194         __multiply [56]
+-----------------------------------------------
+                                                 <spontaneous>
+[57]     0.0    0.00    0.00                 NNLayer::~NNLayer() [57]
+-----------------------------------------------
+                                                 <spontaneous>
+[58]     0.0    0.00    0.00                 __floatsidf [58]
+-----------------------------------------------
+                                                 <spontaneous>
+[59]     0.0    0.00    0.00                 _printf_r [59]
+-----------------------------------------------
+                                                 <spontaneous>
+[60]     0.0    0.00    0.00                 NNLayer::rand_FloatRange(float, float) [60]
+                0.00    0.00       6/160353      __cxa_allocate_exception <cycle 1> [157]
+-----------------------------------------------
+                                                 <spontaneous>
+[61]     0.0    0.00    0.00                 Image::print() [61]
+-----------------------------------------------
+                                                 <spontaneous>
+[62]     0.0    0.00    0.00                 memset [62]
+                0.00    0.00       4/160353      ___vfprintf_internal_r <cycle 1> [27]
+                0.00    0.00       1/160353      altera_avalon_jtag_uart_irq <cycle 1> [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[63]     0.0    0.00    0.00                 VGA::VGA(int, int) [63]
+                0.00    0.00       1/160353      __sfvwrite_r <cycle 1> [158]
+                0.00    0.00       1/160353      _malloc_r <cycle 1> [24]
+                0.00    0.00       1/160353      altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       1/160353      strcmp <cycle 1> [51]
+                0.00    0.00       1/1           Image::~Image() [167]
+                0.00    0.00       1/2           __cxxabiv1::__si_class_type_info::__do_dyncast(int, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [162]
+-----------------------------------------------
+                                                 <spontaneous>
+[64]     0.0    0.00    0.00                 _raise_r [64]
+                0.00    0.00       2/160353      __sfvwrite_r <cycle 1> [158]
+                0.00    0.00       2/160353      altera_avalon_jtag_uart_irq <cycle 1> [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[65]     0.0    0.00    0.00                 printf [65]
+                0.00    0.00       3/160353      ___vfprintf_internal_r <cycle 1> [27]
+-----------------------------------------------
+                                                 <spontaneous>
+[66]     0.0    0.00    0.00                 close [66]
+-----------------------------------------------
+                                   2             Image::init(int, int) [67]
+[67]     0.0    0.00    0.00       0+2       Image::init(int, int) [67]
+                0.00    0.00       2/160353      __cxa_allocate_exception <cycle 1> [157]
+                                   2             Image::init(int, int) [67]
+-----------------------------------------------
+                                                 <spontaneous>
+[68]     0.0    0.00    0.00                 _exit [68]
+-----------------------------------------------
+                                                 <spontaneous>
+[69]     0.0    0.00    0.00                 NN::~NN() [69]
+                0.00    0.00       1/160353      _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[70]     0.0    0.00    0.00                 VGA::send_to_display() [70]
+                0.00    0.00       1/160353      _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[71]     0.0    0.00    0.00                 __umodsi3 [71]
+-----------------------------------------------
+                                   1             altera_avalon_jtag_uart_write <cycle 1> [73]
+               17.45    2.11  130640/160353      alt_irq_handler [4]
+[72]     0.0    0.00    0.00  130641         alt_ic_irq_enable <cycle 1> [72]
+                              130640             altera_avalon_jtag_uart_read <cycle 1> [49]
+-----------------------------------------------
+                                   2             altera_avalon_jtag_uart_irq <cycle 1> [7]
+                                   3             alt_alarm_stop <cycle 1> [79]
+                                 321             altera_avalon_jtag_uart_read <cycle 1> [49]
+                0.03    0.00     188/160353      alt_irq_handler [4]
+[73]     0.0    0.00    0.00     514         altera_avalon_jtag_uart_write <cycle 1> [73]
+                0.00    0.00       1/1           alt_avalon_timer_sc_irq [88]
+                                   1             alt_find_file <cycle 1> [78]
+                                   1             alt_ic_irq_enable <cycle 1> [72]
+-----------------------------------------------
+                                 441             ___vfprintf_internal_r <cycle 1> [27]
+[74]     0.0    0.00    0.00     441         kill <cycle 1> [74]
+                                1764             __adddf3 <cycle 1> [8]
+-----------------------------------------------
+                0.00    0.00       1/6           altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       1/6           open <cycle 1> [86]
+                0.00    0.00       1/6           alt_file_locked <cycle 1> [89]
+                0.00    0.00       3/6           alt_alarm_stop <cycle 1> [79]
+[75]     0.0    0.00    0.00       6         altera_avalon_jtag_uart_ioctl [75]
+-----------------------------------------------
+                0.00    0.00       1/5           alt_irq_handler [4]
+                0.00    0.00       1/5           altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       3/5           alt_find_file <cycle 1> [78]
+[76]     0.0    0.00    0.00       5         alt_icache_flush [76]
+-----------------------------------------------
+                0.00    0.00       1/5           alt_irq_handler [4]
+                0.00    0.00       1/5           alt_avalon_timer_sc_init [80]
+                0.00    0.00       1/5           alt_ic_irq_disable [83]
+                0.00    0.00       2/5           alt_file_locked <cycle 1> [89]
+[77]     0.0    0.00    0.00       5         alt_open_fd [77]
+-----------------------------------------------
+                                   1             altera_avalon_jtag_uart_write <cycle 1> [73]
+                                   3             open <cycle 1> [86]
+[78]     0.0    0.00    0.00       4         alt_find_file <cycle 1> [78]
+                0.00    0.00       3/5           alt_icache_flush [76]
+                                   3             ___vfprintf_internal_r <cycle 1> [27]
+-----------------------------------------------
+                                   3             __udivdi3 <cycle 1> [48]
+[79]     0.0    0.00    0.00       3         alt_alarm_stop <cycle 1> [79]
+                0.00    0.00       3/3           alt_avalon_timer_sc_init [80]
+                0.00    0.00       3/6           altera_avalon_jtag_uart_ioctl [75]
+                                   3             altera_avalon_jtag_uart_write <cycle 1> [73]
+-----------------------------------------------
+                0.00    0.00       3/3           alt_alarm_stop <cycle 1> [79]
+[80]     0.0    0.00    0.00       3         alt_avalon_timer_sc_init [80]
+                0.00    0.00       1/2           alt_ic_irq_disable [83]
+                0.00    0.00       1/5           alt_open_fd [77]
+                0.00    0.00       1/2           alt_get_errno [82]
+-----------------------------------------------
+                0.00    0.00       3/3           open <cycle 1> [86]
+[81]     0.0    0.00    0.00       3         alt_get_fd [81]
+-----------------------------------------------
+                0.00    0.00       1/2           alt_avalon_timer_sc_init [80]
+                0.00    0.00       1/2           alt_ic_irq_disable [83]
+[82]     0.0    0.00    0.00       2         alt_get_errno [82]
+-----------------------------------------------
+                0.00    0.00       1/2           alt_avalon_timer_sc_init [80]
+                0.00    0.00       1/2           altera_avalon_jtag_uart_read_fd [118]
+[83]     0.0    0.00    0.00       2         alt_ic_irq_disable [83]
+                0.00    0.00       1/5           alt_open_fd [77]
+                0.00    0.00       1/2           alt_get_errno [82]
+-----------------------------------------------
+                0.00    0.00       2/2           altera_avalon_jtag_uart_irq <cycle 1> [7]
+[84]     0.0    0.00    0.00       2         alt_ic_irq_enabled [84]
+-----------------------------------------------
+                0.00    0.00       1/2           altera_avalon_jtag_uart_irq <cycle 1> [7]
+                0.00    0.00       1/2           _dtoa_r <cycle 1> [55]
+[85]     0.0    0.00    0.00       2         alt_iic_isr_register [85]
+-----------------------------------------------
+                                   1             open <cycle 1> [86]
+                                   2             alt_file_locked <cycle 1> [89]
+[86]     0.0    0.00    0.00       2+1       open <cycle 1> [86]
+                0.00    0.00       3/3           alt_get_fd [81]
+                0.00    0.00       1/6           altera_avalon_jtag_uart_ioctl [75]
+                                   3             alt_find_file <cycle 1> [78]
+                                   1             open <cycle 1> [86]
+-----------------------------------------------
+                                   2             main <cycle 1> [15]
+[87]     0.0    0.00    0.00       2         strlen <cycle 1> [87]
+                                   2             ___vfprintf_internal_r <cycle 1> [27]
+-----------------------------------------------
+                0.00    0.00       1/1           altera_avalon_jtag_uart_write <cycle 1> [73]
+[88]     0.0    0.00    0.00       1         alt_avalon_timer_sc_irq [88]
+-----------------------------------------------
+                                   1             altera_avalon_jtag_uart_irq <cycle 1> [7]
+[89]     0.0    0.00    0.00       1         alt_file_locked <cycle 1> [89]
+                0.00    0.00       2/5           alt_open_fd [77]
+                0.00    0.00       1/6           altera_avalon_jtag_uart_ioctl [75]
+                                   2             open <cycle 1> [86]
+-----------------------------------------------
+                0.00    0.00       1/1           alt_irq_handler [4]
+[90]     0.0    0.00    0.00       1         altera_avalon_jtag_uart_init [90]
+-----------------------------------------------
+                0.00    0.00       1/1           altera_avalon_jtag_uart_irq <cycle 1> [7]
+[91]     0.0    0.00    0.00       1         memcmp [91]
+-----------------------------------------------
+                0.00    0.00       1/375         _dtoa_r <cycle 1> [55]
+                0.00    0.00     374/375         ___vfprintf_internal_r <cycle 1> [27]
+[153]    0.0    0.00    0.00     375         __s2b [153]
+-----------------------------------------------
+                0.00    0.00     180/180         NNLayer::random_init(int, int) <cycle 1> [32]
+[154]    0.0    0.00    0.00     180         _Unwind_GetGR [154]
+-----------------------------------------------
+                0.00    0.00      50/50          NNLayer::make_ternary() <cycle 1> [34]
+[155]    0.0    0.00    0.00      50         _Unwind_ForcedUnwind_Phase2 [155]
+-----------------------------------------------
+                                   1             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                                   1             main <cycle 1> [15]
+                                  16             __cxa_allocate_exception <cycle 1> [157]
+[156]    0.0    0.00    0.00      18         operator new[](unsigned int) <cycle 1> [156]
+                                  36             _malloc_r <cycle 1> [24]
+-----------------------------------------------
+                                   1             Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                                   1             NN::NN(int) <cycle 1> [26]
+                                   3             NNLayer::random_init(int, int) <cycle 1> [32]
+                                   3             NNLayer::makeTernaryExtra(float) <cycle 1> [39]
+                0.00    0.00       2/160353      Image::init(int, int) [67]
+                0.00    0.00       6/160353      NNLayer::rand_FloatRange(float, float) [60]
+[157]    0.0    0.00    0.00      16         __cxa_allocate_exception <cycle 1> [157]
+                                  32             _malloc_r <cycle 1> [24]
+                                  16             operator new[](unsigned int) <cycle 1> [156]
+-----------------------------------------------
+                                   1             VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+                                   1             _dtoa_r <cycle 1> [55]
+                                   6             __udivdi3 <cycle 1> [48]
+                0.00    0.00       1/160353      VGA::VGA(int, int) [63]
+                0.00    0.00       2/160353      _raise_r [64]
+                0.00    0.00       2/160353      _Balloc [47]
+[158]    0.0    0.00    0.00      13         __sfvwrite_r <cycle 1> [158]
+                0.00    0.00       2/4           __sigtramp_r [160]
+                                   4             altera_avalon_jtag_uart_irq <cycle 1> [7]
+-----------------------------------------------
+                0.00    0.00       3/6           NN::NN(int) <cycle 1> [26]
+                0.00    0.00       3/6           NNLayer::random_init(int, int) <cycle 1> [32]
+[159]    0.0    0.00    0.00       6         NNLayer::init(int, int) [159]
+-----------------------------------------------
+                0.00    0.00       1/4           _free_r <cycle 1> [163]
+                0.00    0.00       1/4           alt_sys_init [114]
+                0.00    0.00       2/4           __sfvwrite_r <cycle 1> [158]
+[160]    0.0    0.00    0.00       4         __sigtramp_r [160]
+-----------------------------------------------
+                0.00    0.00       2/2           Image::Image() [214]
+[161]    0.0    0.00    0.00       2         Image::Image(int, int) [161]
+-----------------------------------------------
+                0.00    0.00       1/2           VGA::VGA(int, int) [63]
+                0.00    0.00       1/2           VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+[162]    0.0    0.00    0.00       2         __cxxabiv1::__si_class_type_info::__do_dyncast(int, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [162]
+-----------------------------------------------
+                                   1             _malloc_r <cycle 1> [24]
+                                   1             _dtoa_r <cycle 1> [55]
+[163]    0.0    0.00    0.00       2         _free_r <cycle 1> [163]
+                0.00    0.00       1/4           __sigtramp_r [160]
+                                 187             __udivdi3 <cycle 1> [48]
+                                 187             ___vfiprintf_internal_r <cycle 1> [52]
+-----------------------------------------------
+                0.00    0.00       1/2           Image::apply_NN(NN*, int, int) <cycle 1> [9]
+                0.00    0.00       1/2           main <cycle 1> [15]
+[164]    0.0    0.00    0.00       2         _start [164]
+-----------------------------------------------
+                0.00    0.00       1/1           main <cycle 1> [15]
+[165]    0.0    0.00    0.00       1         read_sleb128(unsigned char const*, long*) [165]
+-----------------------------------------------
+                0.00    0.00       1/1           main <cycle 1> [15]
+[166]    0.0    0.00    0.00       1         get_adjusted_ptr(std::type_info const*, std::type_info const*, void**) [166]
+-----------------------------------------------
+                0.00    0.00       1/1           VGA::VGA(int, int) [63]
+[167]    0.0    0.00    0.00       1         Image::~Image() [167]
+-----------------------------------------------
+                0.00    0.00       1/1           VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) <cycle 1> [36]
+[168]    0.0    0.00    0.00       1         __cxa_allocate_dependent_exception [168]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+ [155] _Unwind_ForcedUnwind_Phase2 (unwind.inc) [8] __adddf3 [50] alt_dev_llist_insert
+ [154] _Unwind_GetGR         [168] __cxa_allocate_dependent_exception [46] alt_dev_null_write (alt_dev.c)
+  [38] _Unwind_RaiseException_Phase2 (unwind.inc) [157] __cxa_allocate_exception [89] alt_file_locked (alt_open.c)
+  [40] vector_weight(int)     [16] __divdf3               [78] alt_find_file
+ [165] read_sleb128(unsigned char const*, long*) (unwind-pe.h) [21] __eqdf2 [82] alt_get_errno (alt_errno.h)
+ [166] get_adjusted_ptr(std::type_info const*, std::type_info const*, void**) (eh_personality.cc) [58] __floatsidf [81] alt_get_fd
+  [12] NN::getMaxOutputIndex() [19] __floatunsidf         [83] alt_ic_irq_disable
+  [26] NN::NN(int)            [14] __ieee754_log          [72] alt_ic_irq_enable
+  [36] VGA::Set_Pixel_Color(unsigned int, unsigned int, unsigned int) [42] __lshift [84] alt_ic_irq_enabled
+  [10] Image::make_fractal()  [37] __muldf3               [76] alt_icache_flush
+  [13] Image::source_pixel(int, int) [56] __multiply      [85] alt_iic_isr_register
+  [23] Image::printToScreen(int, int, VGA*) [45] __pow5mult [4] alt_irq_handler
+  [29] Image::Get_Fractal_Color(int) [153] __s2b          [18] alt_load_section (alt_load.h)
+  [20] Image::Get_Fractal_Level(float, float) [158] __sfvwrite_r [77] alt_open_fd (alt_io_redirect.c)
+  [61] Image::print()        [160] __sigtramp_r           [25] alt_tick
+  [17] Image::make_bw()       [53] __smakebuf_r           [90] altera_avalon_jtag_uart_init
+   [9] Image::apply_NN(NN*, int, int) [31] __subdf3       [75] altera_avalon_jtag_uart_ioctl
+  [11] Image::randomize()     [48] __udivdi3               [7] altera_avalon_jtag_uart_irq (altera_avalon_jtag_uart_init.c)
+ [161] Image::Image(int, int) [33] __umoddi3              [49] altera_avalon_jtag_uart_read
+ [167] Image::~Image()        [71] __umodsi3               [6] altera_avalon_jtag_uart_timeout (altera_avalon_jtag_uart_init.c)
+  [32] NNLayer::random_init(int, int) [43] _do_ctors      [73] altera_avalon_jtag_uart_write
+  [34] NNLayer::make_ternary() [35] _do_dtors             [66] close
+  [39] NNLayer::makeTernaryExtra(float) [55] _dtoa_r      [74] kill
+   [1] NNLayer::print_activation() [68] _exit             [15] main
+ [159] NNLayer::init(int, int) [163] _free_r              [91] memcmp
+  [28] NNLayer::print()       [24] _malloc_r              [44] memmove
+   [2] NNLayer::propagate(short*) [54] _malloc_trim_r     [86] open
+  [57] NNLayer::~NNLayer()    [59] _printf_r              [51] strcmp
+ [162] __cxxabiv1::__si_class_type_info::__do_dyncast(int, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [164] _start [87] strlen
+ [156] operator new[](unsigned int) [79] alt_alarm_stop    [3] <cycle 1>
+  [52] ___vfiprintf_internal_r [80] alt_avalon_timer_sc_init
+  [27] ___vfprintf_internal_r [88] alt_avalon_timer_sc_irq (altera_avalon_timer_sc.c)
