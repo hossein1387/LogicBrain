@@ -10,6 +10,8 @@
 
 #include "NNLayer.h"
 
+typedef short BYTE;
+
 class NN {
 public:
 	NN(int new_n_layer);
@@ -18,7 +20,7 @@ public:
 	int n_layer;
 	NNLayer * layer;
 	void make_ternary();
-	float * propagate(float * source);
+	BYTE * propagate(BYTE * source);
 	int  getMaxOutputIndex();
 	int getMaxOutputValue();
 	void print();

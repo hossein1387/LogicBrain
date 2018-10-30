@@ -11,6 +11,7 @@
 #include "io.h"
 #include "system.h"
 
+
 Image::Image() {
 	// TODO Auto-generated constructor stub
 	source_array = 0;
@@ -114,8 +115,8 @@ void Image::make_bw() {
  *
  *******************************************************/
 Image * Image::apply_NN(NN * network, int size, int pos) {
-	float source[size*size];
-	Image * result = new Image(length-size+1,height-size+1);
+	BYTE* source = new BYTE[size*size]; 
+	Image * result = new Image(length-size+1,height-size+1); //-size (pour tenir compte de l'épaisseur du kernel)
 
 	for (int y=0; y<=height-size; y++) {
 		printf("Processing line %i\r\n",y);
@@ -123,10 +124,10 @@ Image * Image::apply_NN(NN * network, int size, int pos) {
 			/* Appliquer le reseau sur un sous-bloc de l'image */
 			for (int j=0; j<size; j++) {
 				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j))/255.0;
+					source[j*size + i] = (*source_pixel(x + i, y + j)) / 255;   // source contient le résultat des multiplications
 				}
 			}
-			network->propagate(source);
+			network->propagate(source);  // Cette fonction fait les additions des multiplications précédentes
 
 			/* Stocker les bons/meilleurs matchs */
 			unsigned char pixel;
@@ -141,6 +142,7 @@ Image * Image::apply_NN(NN * network, int size, int pos) {
  * Affiche l'image a l'ecran a la position x,y.
  *
  **********************************************************/
+
 void Image::printToScreen(int x, int y, VGA *pVGA) {
 	for(int i=0; i<length; i++) {
 		for(int j=0; j<height; j++) {
@@ -148,6 +150,7 @@ void Image::printToScreen(int x, int y, VGA *pVGA) {
 		}
 	}
 }
+
 
 /**********************************************************
  * Affiche l'image a l'ecran a la position x,y.

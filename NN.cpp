@@ -24,7 +24,7 @@ void NN::make_ternary() {
 	}
 }
 
-float * NN::propagate(float * source) {
+BYTE * NN::propagate(BYTE * source) {
 	for (int i=0; i<n_layer; i++) {
 		source = layer[i].propagate(source);
 	}

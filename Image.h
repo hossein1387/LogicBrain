@@ -14,6 +14,8 @@
 #include "stdlib.h"
 #include "VGA.h"
 
+typedef short BYTE;
+
 class Image {
 public:
 	Image();
@@ -28,7 +30,8 @@ public:
 	unsigned char * source_pixel(int x, int y);
 	void make_bw();
 	Image * apply_NN(NN * network, int size, int pos);
-	void printToScreen(int x, int y, VGA *pVGA);
+    void printToScreen(int x, int y, VGA *pVGA);
+	
 	void print();
 	~Image();
 

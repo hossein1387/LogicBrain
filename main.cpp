@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	my_image.printToScreen(120,0,pVGA);
 	printf("Start processing ...");
 
-	for (int i=0;i<10;i++) {
+	for (int i=0;i<1;i++) {
 		int time1 = alt_nticks();
 		Image * result_image = my_image.apply_NN(&network, matrix_size, i);
 		int time2 = alt_nticks();
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 		delete result_image;
 		printf("done in %d ms\r\n",(time2-time1));
 	}
-
+	exit(0);
 	return 0;
 }
 

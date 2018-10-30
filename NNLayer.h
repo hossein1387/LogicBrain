@@ -9,6 +9,8 @@
 #define NNLAYER_H_
 #include "VGA.h"
 
+typedef short BYTE;
+
 class NNLayer {
 public:
 	NNLayer();
@@ -22,12 +24,13 @@ public:
 	int n_input;
 	int n_neuron;
 
-	float *bias;
-	float *weight;
-	float *value;
+	BYTE *bias;
+	BYTE *weight;
+	BYTE *value;
 
-	float fct(float x);
-	float * propagate(float * source);
+	BYTE fct(BYTE x);
+	BYTE makeTernaryExtra(float fvalue);
+	BYTE * propagate(BYTE * source);
 
 	void print_activation();
 	void print();

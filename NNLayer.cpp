@@ -11,6 +11,7 @@
 #include "stdlib.h"
 #include "Image.h"
 
+
 #define MAKE_TERNARY_THRESHOLD 0.3
 
 NNLayer::NNLayer() {
@@ -32,10 +33,10 @@ void NNLayer::init(int new_n_input, int new_n_neuron) {
 	n_input = new_n_input;
 	n_neuron = new_n_neuron;
 
-	bias = new float[n_neuron];
+	bias = new BYTE[n_neuron];
 
-	weight = new float[n_neuron*n_input];
-	value = new float[n_neuron];
+	weight = new BYTE[n_neuron*n_input];
+	value = new BYTE[n_neuron];
 }
 
 int MYrand() {
@@ -48,17 +49,27 @@ float NNLayer::rand_FloatRange(float a, float b) {
 	return ((b-a)*((float)MYrand()/0x7FFFFFFF))+a;
 }
 
+BYTE NNLayer::makeTernaryExtra(float fvalue){
+	if (fvalue >= 0.4) {
+		return 1;
+	} else if(fvalue <=-0.4){
+		return -1;
+	} else {
+		return 0;
+	}
+}
+
 void NNLayer::random_init(int new_n_input, int new_n_neuron) {
 	// TODO Auto-generated constructor stub
 	init(new_n_input, new_n_neuron);
 
-	bias = new float[n_neuron];
+	bias = new BYTE[n_neuron];
 
-	float * cur_weight = weight;
+	BYTE * cur_weight = weight;
 	for (int i=0; i<n_neuron; i++) {
-		bias[i] = rand_FloatRange(-log2(new_n_input),log2(new_n_input));
+		bias[i] = makeTernaryExtra(rand_FloatRange(-log2(new_n_input),log2(new_n_input)));
 		for (int j=0; j<n_input; j++) {
-			*(cur_weight++) = rand_FloatRange(-1,1);
+			*(cur_weight++) = makeTernaryExtra(rand_FloatRange(-1,1));
 		}
 	}
 }
@@ -73,7 +84,7 @@ int vector_weight(int x) {
 }
 
 void NNLayer::make_ternary() {
-	float * cur_weight = weight;
+	BYTE * cur_weight = weight;
 	for (int i=0; i<n_neuron; i++) {
 		bias[i] = trunc(bias[i]);
 		for (int j=0; j<n_input; j++) {
@@ -90,23 +101,23 @@ NNLayer::~NNLayer() {
 }
 
 //Edit this function for ternary logic
-float NNLayer::fct(float x) {
+BYTE NNLayer::fct(BYTE x) {
 //	return 1.0/(1.0+exp(-x));
-	if (x>0) return 1.0;
+	if (x>0) return 1;
 	else return 0;
 }
 
-float * NNLayer::propagate(float * source) {
+BYTE * NNLayer::propagate(BYTE * source) {
 	// TODO Auto-generated constructor stub
-	float * cur_weight = weight;
+	BYTE * cur_weight = weight;
 
 	for (int i=0; i<n_neuron; i++) {
-		float acc = bias[i];
+		BYTE acc = bias[i];
 
 		for (int j=0; j<n_input; j++) {
 			acc += *(cur_weight++) * source[j];
 		}
-		value[i] = fct(acc);
+		value[i] = fct(acc); //Binary result
 	}
 	return value;
 }
@@ -121,7 +132,7 @@ void NNLayer::print_activation() {
 void NNLayer::print() {
 	// TODO Auto-generated constructor stub
 
-	float * cur_weight = weight;
+	BYTE * cur_weight = weight;
 
 	for (int i=0; i<n_neuron; i++) {
 		printf("Neuron %i: %f, {", i+1, bias[i]);
@@ -132,4 +143,3 @@ void NNLayer::print() {
 		printf("}, %f\r\n",value[i]);
 	}
 }
-
