@@ -19,6 +19,7 @@ INSTRUCTION_LENGTH = 42
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--inputfile', help='Input assembly source code for accel core processor', required=True)
+    parser.add_argument('-o', '--outputfile', help='Output binary file', required=False)
     parser.add_argument('-v', '--verbosity', help='Print verbosity', required=False)
     args = parser.parse_args()
     return vars(args)
@@ -155,11 +156,13 @@ def parse_code(file):
         lines = f.readlines()
         line_num = 0
         code_str = ""
+        bin_str_code = ""
         for line in lines:
             line_num += 1
             line = clean_code_line(line)
             if line != "":
                 bin_instr = line.ljust(15, ' ') + ":" + decode_instr(line, line_num)
+                bin_str_code += bin_instr + "\n"
                 util.print_log(bin_instr, id_str="INFO", color="green", verbosity="VERB_LOW")
 #=======================================================================
 # Main
@@ -169,6 +172,7 @@ if __name__ == '__main__':
     args = parse_args()
     verbosity = args["verbosity"]
     inputfile = args["inputfile"]
+    outputfile= args["outputfile"]
     if verbosity is None:
         verbosity = "VERB_LOW"
     util.print_banner("Accel Core Assembler", verbosity=verbosity)
