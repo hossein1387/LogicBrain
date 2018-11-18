@@ -4,13 +4,11 @@
  *  Created on: Jul 11, 2013
  *      Author: jpdavid
  */
-
 #ifndef NN_H_
 #define NN_H_
 
 #include "NNLayer.h"
-
-typedef short BYTE;
+#include "utils.h"
 
 class NN {
 public:
