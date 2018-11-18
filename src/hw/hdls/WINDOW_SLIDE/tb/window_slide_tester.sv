@@ -4,8 +4,8 @@ module window_slide_tester;
 //==================================================================================================
 // Global Variables
     parameter IMAGE_ROW_LEN = 10;
-    parameter IMAGE_COL_LEN = IMAGE_ROW_LEN;
-    parameter IMAGE_SIZE    = IMAGE_ROW_LEN * IMAGE_ROW_LEN;
+    parameter IMAGE_COL_LEN = 20;
+    parameter IMAGE_SIZE    = IMAGE_ROW_LEN * IMAGE_COL_LEN;
     parameter KERNEL_SIZE   = 3;
     parameter STRIDE        = 1;
     logic clk, rst, new_image, done, busy, valid_ws;
@@ -18,6 +18,7 @@ module window_slide_tester;
 
     window_slide #  (    
                         .IMAGE_ROW_LEN(IMAGE_ROW_LEN),
+                        .IMAGE_COL_LEN(IMAGE_COL_LEN),
                         .KERNEL_SIZE  (KERNEL_SIZE  ),
                         .STRIDE       (STRIDE       )
                     )

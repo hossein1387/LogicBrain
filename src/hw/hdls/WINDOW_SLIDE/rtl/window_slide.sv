@@ -3,6 +3,7 @@
 module window_slide
     #(
     parameter IMAGE_ROW_LEN= 32,
+    parameter IMAGE_COL_LEN= 32,
     parameter KERNEL_SIZE  = 3,
     parameter STRIDE       = 1
     )
@@ -17,8 +18,8 @@ module window_slide
         output reg  done,
         output wire busy
     );  
-    localparam IMAGE_SIZE         = IMAGE_ROW_LEN*IMAGE_ROW_LEN;
-    localparam PIPELINE_PIXEL_MAX = IMAGE_ROW_LEN*(KERNEL_SIZE-1) + KERNEL_SIZE;
+    localparam IMAGE_SIZE         = IMAGE_ROW_LEN*IMAGE_COL_LEN;
+    localparam PIPELINE_PIXEL_MAX = IMAGE_COL_LEN*(KERNEL_SIZE-1) + KERNEL_SIZE;
 `ifdef USING_KERNEL_2
     wire lbuf_out;
 `else 
@@ -38,14 +39,14 @@ module window_slide
 //==================================================================================================
 // Circuit to instantiate line buffers based on the kernel size
 `ifdef USING_KERNEL_2
-     line_buffer #( .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
+     line_buffer #( .DEPTH_SIZE  (IMAGE_COL_LEN-KERNEL_SIZE))
      line_buffer_inst(.clk(clk), .rst(rst), .x_in(x_buf[KERNEL_SIZE-1]), .en(slide), .y_out(lbuf_out));
 `else 
     genvar lbf_cnt;
     generate
         // line buffer builder
         for ( lbf_cnt = 0; lbf_cnt < KERNEL_SIZE-1; lbf_cnt++) begin
-            line_buffer #( .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
+            line_buffer #( .DEPTH_SIZE  (IMAGE_COL_LEN-KERNEL_SIZE))
             line_buffer_inst(.clk(clk), .rst(rst), .x_in(x_buf[(lbf_cnt+1)*KERNEL_SIZE-1]), .en(slide), .y_out(lbuf_out[lbf_cnt]));
         end
     endgenerate
@@ -109,13 +110,13 @@ module window_slide
             end
         end
         if(col_stride_cnt==col_pixel_cnt) begin
-            if (col_stride_cnt + STRIDE > IMAGE_ROW_LEN) begin
+            if (col_stride_cnt + STRIDE > IMAGE_COL_LEN) begin
                 col_stride_cnt <= KERNEL_SIZE;
             end else begin
                 col_stride_cnt <= col_stride_cnt + STRIDE;
             end
         end
-        if (col_pixel_cnt == IMAGE_ROW_LEN) begin
+        if (col_pixel_cnt == IMAGE_COL_LEN) begin
             col_pixel_cnt  <= 32'b1;
             row_pixel_cnt  <= row_pixel_cnt + 1;
             if(row_stride_cnt==row_pixel_cnt) begin
@@ -126,7 +127,7 @@ module window_slide
             end
         end
         done          <= (pixel_cnt==IMAGE_SIZE) ? 1'b1 : 1'b0;
-        new_image_line<= (col_pixel_cnt == IMAGE_ROW_LEN)? 1'b1 : 1'b0;
+        new_image_line<= (col_pixel_cnt == IMAGE_COL_LEN)? 1'b1 : 1'b0;
     end
 
 
