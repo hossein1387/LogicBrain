@@ -1,4 +1,4 @@
-`include "../tb/utils.sv"
+import utils::*;
 
 module line_buffer_tester;
 //==================================================================================================
@@ -6,7 +6,7 @@ module line_buffer_tester;
     parameter INPUT_WIDTH  = 16;
     parameter DEPTH_SIZE   = 10;
     parameter NUM_ELEMENTS = 10;
-
+    print_verbosity verbosity = VERB_LOW;
     logic clk, rst;
 
     logic x_in_vec [NUM_ELEMENTS-1:0];
@@ -36,12 +36,12 @@ module line_buffer_tester;
             step_cnt++;
         end
         for(int i=0; i<NUM_ELEMENTS; i++) begin
-            //if(y_out_q[i]==x_in_vec[i]) begin
-            //    test_stat.pass_cnt++;
-            //end else begin
-            //    `test_print("ERROR", $sformatf("Expected=%0h   Actual=%0h", x_in_vec[i], y_out_q[i]), verbosity)
-            //    test_stat.fail_cnt++;
-            //end
+            if(y_out_q[i]==x_in_vec[i]) begin
+               test_stat.pass_cnt++;
+            end else begin
+               `test_print("ERROR", $sformatf("Expected=%0h   Actual=%0h", x_in_vec[i], y_out_q[i]), verbosity)
+               test_stat.fail_cnt++;
+            end
         end
         //print_result(test_stat, verbosity);
         $finish();

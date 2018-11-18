@@ -1,19 +1,7 @@
-//==============================================================================
-// Max pooling core
-//
-// This is a behavioral description of a Max Pooling core. This module performs
-// maxpooling on the input image of any length. 
-//
-// @params:
-// x_in: Input vector 
-// y_out: Output vector contains the result of shift
-//==============================================================================
 `default_nettype none
 
-module max_pool
+module window_slide
     #(
-    parameter INPUT_WIDTH  = 16,
-    parameter OUTPUT_WIDTH = INPUT_WIDTH,
     parameter IMAGE_ROW_LEN= 32,
     parameter KERNEL_SIZE  = 3,
     parameter STRIDE       = 1
@@ -22,21 +10,21 @@ module max_pool
         input  wire clk,
         input  wire rst,
         input  wire new_image,
-        input  wire [INPUT_WIDTH-1  : 0 ]x_in,
-        output wire [OUTPUT_WIDTH-1 : 0 ]y_out,
-        output wire output_valid,
+        input  wire x_in,
+        input  wire slide,
+        output wire y_out[KERNEL_SIZE*KERNEL_SIZE-1:0],
+        output wire valid_ws,
         output reg  done,
         output wire busy
     );  
     localparam IMAGE_SIZE         = IMAGE_ROW_LEN*IMAGE_ROW_LEN;
     localparam PIPELINE_PIXEL_MAX = IMAGE_ROW_LEN*(KERNEL_SIZE-1) + KERNEL_SIZE;
 `ifdef USING_KERNEL_2
-    wire [INPUT_WIDTH-1 : 0 ] lbuf_out;
+    wire lbuf_out;
 `else 
-    wire [INPUT_WIDTH-1 : 0 ] lbuf_out  [KERNEL_SIZE-2:0];
+    wire lbuf_out  [KERNEL_SIZE-2:0];
 `endif
-    wire [INPUT_WIDTH-1 : 0 ] max_out;
-    reg  [INPUT_WIDTH-1 : 0 ] x_buf     [KERNEL_SIZE*KERNEL_SIZE-1:0];
+    reg  x_buf     [KERNEL_SIZE*KERNEL_SIZE-1:0];
 
 // Signals to detect image boundary
     wire                    pipeline_full;
@@ -48,23 +36,17 @@ module max_pool
     reg [31:0]              col_stride_cnt;
     reg [31:0]              row_stride_cnt;
 //==================================================================================================
-     array_max_find#(.INPUT_WIDTH(INPUT_WIDTH),
-                     .NUM_ELEMENTS(KERNEL_SIZE*KERNEL_SIZE))
-     array_max_find_inst(x_buf, max_out);
-//==================================================================================================
 // Circuit to instantiate line buffers based on the kernel size
 `ifdef USING_KERNEL_2
-     line_buffer #(.INPUT_WIDTH (INPUT_WIDTH ),
-                   .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
-     line_buffer_inst1(.clk(clk), .rst(rst), .x_in(x_buf[KERNEL_SIZE-1]), .y_out(lbuf_out));
+     line_buffer #( .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
+     line_buffer_inst(.clk(clk), .rst(rst), .x_in(x_buf[KERNEL_SIZE-1]), .en(slide), .y_out(lbuf_out));
 `else 
     genvar lbf_cnt;
     generate
         // line buffer builder
         for ( lbf_cnt = 0; lbf_cnt < KERNEL_SIZE-1; lbf_cnt++) begin
-            line_buffer #(.INPUT_WIDTH (INPUT_WIDTH ),
-                          .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
-            line_buffer_inst1(.clk(clk), .rst(rst), .x_in(x_buf[(lbf_cnt+1)*KERNEL_SIZE-1]), .y_out(lbuf_out[lbf_cnt]));
+            line_buffer #( .DEPTH_SIZE  (IMAGE_ROW_LEN-KERNEL_SIZE))
+            line_buffer_inst(.clk(clk), .rst(rst), .x_in(x_buf[(lbf_cnt+1)*KERNEL_SIZE-1]), .en(slide), .y_out(lbuf_out[lbf_cnt]));
         end
     endgenerate
 `endif
@@ -74,10 +56,9 @@ module max_pool
     always_ff @(posedge clk) begin
         if(~rst) begin
             for (int i=0; i< KERNEL_SIZE*KERNEL_SIZE; i++) begin
-                x_buf[i] <= {OUTPUT_WIDTH{1'b0}};
+                x_buf[i] <= 1'b0;
             end
         end else begin
-            //x_in_reg <= x_in;
 `ifdef USING_KERNEL_2
             x_buf[0] <= x_in;
             for (int col=1; col< KERNEL_SIZE; col++) begin
@@ -159,36 +140,7 @@ module max_pool
     // Detecting if pipeline is full or not
     assign pipeline_full = ((pixel_cnt>PIPELINE_PIXEL_MAX-1) & (pixel_cnt<=IMAGE_SIZE+1))? 1'b1 : 1'b0;
     // Circuit for signaling when output is valid
-    assign output_valid  = pipeline_full & col_stride_ok & row_stride_ok & (pixel_cnt<=IMAGE_SIZE+1);
+    assign valid_ws  = pipeline_full & col_stride_ok & row_stride_ok & (pixel_cnt<=IMAGE_SIZE+1);
 
-    // Circuit to find maximum number in an array
-    assign y_out = max_out;
-
-endmodule
-
-
-//==================================================================================================
-// A module to find the maximum value within an array of size NUM_ELEMENTS
-//==================================================================================================
-module array_max_find 
-    #(
-    parameter INPUT_WIDTH  = 16,
-    parameter OUTPUT_WIDTH = INPUT_WIDTH,
-    parameter NUM_ELEMENTS = 9
-    )
-    (
-    input  wire signed [INPUT_WIDTH-1 : 0 ] x_in[NUM_ELEMENTS-1:0],
-    output wire signed [OUTPUT_WIDTH-1 : 0 ] y_out
-    );
-    logic signed [OUTPUT_WIDTH-1 : 0 ] arry_max_res[NUM_ELEMENTS-2:0];
-    genvar ss_cnt;
-    generate
-        for ( ss_cnt = 1; ss_cnt < NUM_ELEMENTS-1; ss_cnt++) begin
-            assign arry_max_res[ss_cnt] = (arry_max_res[ss_cnt-1] > x_in[ss_cnt+1]) ? arry_max_res[ss_cnt-1] : x_in[ss_cnt+1];
-        end
-    endgenerate
-
-    assign arry_max_res[0] = (x_in[0] > x_in[1]) ? x_in[0] : x_in[1];
-    assign y_out = arry_max_res[NUM_ELEMENTS-2];
-
+    assign y_out = x_buf;
 endmodule
