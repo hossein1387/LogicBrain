@@ -1,0 +1,19 @@
+$date
+	Wed Nov 14 22:55:23 2018
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module line_buffer $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 1 # x_in $end
+$var wire 1 $ y_out $end
+$upscope $end
+$scope module line_buffer_tester $end
+$var reg 1 % clk $end
+$var reg 1 & rst $end
+$upscope $end
