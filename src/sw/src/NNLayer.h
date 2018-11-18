@@ -4,12 +4,10 @@
  *  Created on: Jul 11, 2013
  *      Author: jpdavid
  */
-
 #ifndef NNLAYER_H_
 #define NNLAYER_H_
-#include "VGA.h"
-
-typedef short BYTE;
+#include "utils.h"
+#include "AccelCore.h"
 
 class NNLayer {
 public:
@@ -18,6 +16,7 @@ public:
 	void init(int new_n_input, int new_n_neuron);
 	float rand_FloatRange(float a, float b);
 	void random_init(int new_n_input, int new_n_neuron);
+	BYTE makeTernaryExtra(float fValue);
 	void make_ternary();
 	virtual ~NNLayer();
 
@@ -29,11 +28,12 @@ public:
 	BYTE *value;
 
 	BYTE fct(BYTE x);
-	BYTE makeTernaryExtra(float fvalue);
 	BYTE * propagate(BYTE * source);
 
 	void print_activation();
 	void print();
+private:
+	AccelCore* accelCore_;
 
 };
 

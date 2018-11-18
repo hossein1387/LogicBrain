@@ -1,5 +1,3 @@
-
-package utils;
 //==================================================================================================
 // Enum: print_verbosity
 // Defines standard verbosity levels for reports.
@@ -54,20 +52,3 @@ function void print_result(test_stats test_stat, print_verbosity verbosity);
     `test_print("INFO", $sformatf("Number of failed tests = %0d\n", test_stat.fail_cnt), verbosity)
 
 endfunction : print_result
-
-//==================================================================================================
-// Given the size of a matrix and an input array, this function prints array in matrix format 
-function void print_matrix_from_array(inout int array, int row_len, int col_len);
-    string array_shape_str = "";
-    int elcnt = 0;
-    for (int rows=0; rows<row_len; rows++) begin
-        for(int cols=0; cols<col_len; cols++) begin
-            array_shape_str = {array_shape_str, $sformatf("%2h ",array[elcnt])};
-            elcnt++;
-        end
-        `test_print("INFO", $sformatf("%s", array_shape_str), VERB_LOW)
-        array_shape_str = "";
-    end
-endfunction : print_matrix_from_array
-
-endpackage : utils
