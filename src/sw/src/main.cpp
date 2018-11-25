@@ -37,11 +37,13 @@ int main(int argc, char **argv)
 
     /* Initialisation et application a une image de la machine neuronale (poids aleatoires) */
 
+
+
     printf("> Exemple 1: NN Aleatoire \r\n");
     NN network(3);
     int matrix_size = 16;
 
-    network.layer[0].random_init(matrix_size*matrix_size, 40);
+    network.layer[0].random_init(matrix_size*matrix_size, 40);network.layer[0].make_ternary();
     network.layer[1].random_init(40, 40);network.layer[1].make_ternary();
     network.layer[2].random_init(40, 10);network.layer[2].make_ternary();
 
@@ -52,14 +54,19 @@ int main(int argc, char **argv)
 	my_image.printToScreen(120,0,pVGA);
 	printf("Start processing ...");
 
-	for (int i=0;i<1;i++) {
+		Image* tableauImage[10];
+		for(int i=0; i<10; i++){
+			tableauImage[i] = new Image(45,185);
+		}
 		int time1 = alt_nticks();
-		Image * result_image = my_image.apply_NN(&network, matrix_size, i);
+		Image * result_image = my_image.apply_NN(&network, matrix_size, 0, tableauImage);
+
+		for (int i=0;i<10;i++) {
+			tableauImage[i]->printToScreen(60*i,240,pVGA);
+			delete tableauImage[i];
+		}
 		int time2 = alt_nticks();
-		result_image->printToScreen(60*i,240,pVGA);
-		delete result_image;
 		printf("done in %d ms\r\n",(time2-time1));
-	}
 	exit(0);
 	return 0;
 }

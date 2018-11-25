@@ -114,28 +114,30 @@ void Image::make_bw() {
  * image a l'entree de ce reseau de neuronnes.
  *
  *******************************************************/
-Image * Image::apply_NN(NN * network, int size, int pos) {
+Image* Image::apply_NN(NN * network, int size, int pos, Image** resultRef) {
 	BYTE* source = new BYTE[size*size]; 
-	Image * result = new Image(length-size+1,height-size+1); //-size (pour tenir compte de l'épaisseur du kernel)
+	Image * result = new Image(length-size+1,height-size+1);
 
-	for (int y=0; y<=height-size; y++) {
-		printf("Processing line %i\r\n",y);
-		for (int x=0; x<=length-size; x++) {
-			/* Appliquer le reseau sur un sous-bloc de l'image */
-			for (int j=0; j<size; j++) {
-				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x + i, y + j)) / 255;   // source contient le résultat des multiplications
+		for (int y=0; y<=height-size; y++) {
+			printf("Processing line %i\r\n",y);
+			for (int x=0; x<=length-size; x++) {
+				/* Appliquer le reseau sur un sous-bloc de l'image */
+				for (int j=0; j<size; j++) {
+					for (int i=0; i<size; i++) {
+						source[j*size + i] = (*source_pixel(x+i,y+j))/255.0;
+					}
+				}
+				network->propagate(source);
+
+				/* Stocker les bons/meilleurs matchs */
+				unsigned char pixel;
+				for(int k =0; k<10; k++){
+					pixel = 255*(network->layer[network->n_layer-1].value[k]);
+					*(resultRef[k]->source_pixel(x,y)) = pixel;
 				}
 			}
-			network->propagate(source);  // Cette fonction fait les additions des multiplications précédentes
-
-			/* Stocker les bons/meilleurs matchs */
-			unsigned char pixel;
-			pixel = 255*(network->layer[network->n_layer-1].value[pos]);
-			*(result->source_pixel(x,y)) = pixel;
 		}
-	}
-	return result;
+		return result;
 }
 
 /**********************************************************
