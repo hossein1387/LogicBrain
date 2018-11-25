@@ -6,7 +6,6 @@ module line_buffer
         input  wire clk,
         input  wire rst,
         input  wire x_in,
-        input  wire en,
         output wire y_out
     );
     reg buffer [DEPTH_SIZE-1:0];
