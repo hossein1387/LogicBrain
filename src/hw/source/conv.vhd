@@ -8,7 +8,7 @@
 -- Last update: 25 nov 2018
 -------------------------------------------------------------------------------
 -- Description:
--- Load Bias of 1st Layer from Software into RAM
+-- Start the convolution
 -------------------------------------------------------------------------------
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
