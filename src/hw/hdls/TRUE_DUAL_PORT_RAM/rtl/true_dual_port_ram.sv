@@ -18,7 +18,7 @@ module true_d2port_ram
 // Port B
         input wire                    we_b,
 //        input wire [D_WIDTH-1:0]      data_b, 
-        input  wire [ADDR_WIDTH-1:0]   addr_b, 
+        input  wire [ADDR_WIDTH-1:0]  addr_b, 
         output reg [D_WIDTH-1:0]      db_out
     );
     // Declare the RAM variable
