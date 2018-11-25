@@ -1,0 +1,377 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/githubRepo/ELE8307/Calculation Unit
+Eaccelcorel1
+Z1 w1543167906
+Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL1.vhd
+Z6 FC:/githubRepo/ELE8307/Calculation Unit/AccelCoreL1.vhd
+l0
+L5
+Ve<;2KB3DPmFEizJYSF^9f0
+!s100 [KH[oQ1JZoK5@Pb5VnXmY2
+Z7 OP;C;10.4a;61
+32
+Z8 !s110 1543167914
+!i10b 1
+Z9 !s108 1543167914.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL1.vhd|
+Z11 !s107 C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL1.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit -O0
+Z13 tExplicit 1
+Artl
+R2
+R3
+R4
+DEx4 work 11 accelcorel1 0 22 e<;2KB3DPmFEizJYSF^9f0
+l58
+L19
+V2V@`MgWkfO]4KKR@Cl;NA0
+!s100 :z]^Wm6b1h9Qkj`o?GWCi2
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Eaccelcorel2
+Z14 w1543167902
+R2
+R3
+R4
+R0
+Z15 8C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL2.vhd
+Z16 FC:/githubRepo/ELE8307/Calculation Unit/AccelCoreL2.vhd
+l0
+L5
+V35H[HTLW=GPR3oLMY[V_i0
+!s100 kCAOD=g8`59H7^ad>iE6b0
+R7
+32
+R8
+!i10b 1
+R9
+Z17 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL2.vhd|
+Z18 !s107 C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL2.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 11 accelcorel2 0 22 35H[HTLW=GPR3oLMY[V_i0
+l58
+L19
+VdFdISMB:PSj5k47VBV>k`1
+!s100 NodX2[JSBL:c_FMFY9AYi1
+R7
+32
+R8
+!i10b 1
+R9
+R17
+R18
+!i113 1
+R12
+R13
+Eaccelcorel3
+Z19 w1543167895
+R2
+R3
+R4
+R0
+Z20 8C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL3.vhd
+Z21 FC:/githubRepo/ELE8307/Calculation Unit/AccelCoreL3.vhd
+l0
+L5
+VO=2k:OXbhgKcmH=D9>bSL3
+!s100 iZZcI2a6CUWVljOO335=b0
+R7
+32
+R8
+!i10b 1
+R9
+Z22 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL3.vhd|
+Z23 !s107 C:/githubRepo/ELE8307/Calculation Unit/AccelCoreL3.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 11 accelcorel3 0 22 O=2k:OXbhgKcmH=D9>bSL3
+l58
+L19
+VGgZ_P8n]L]fo7dIei;X5M2
+!s100 ifP:;P0N>6cYzWQOWMUAY1
+R7
+32
+R8
+!i10b 1
+R9
+R22
+R23
+!i113 1
+R12
+R13
+Ecalculatorunit
+Z24 w1543077662
+R2
+R3
+R4
+R0
+Z25 8C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit.vhd
+Z26 FC:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit.vhd
+l0
+L5
+VgilE9AJci05lDY5Xa@E7A2
+!s100 :f;Rdh@61;@EcF6TfRUON0
+R7
+32
+R8
+!i10b 1
+R9
+Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit.vhd|
+Z28 !s107 C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 14 calculatorunit 0 22 gilE9AJci05lDY5Xa@E7A2
+l109
+L24
+VomFehhf4MRaQ8GR`UQB9]2
+!s100 bIcz<4JU8TIE_n37J1L1G0
+R7
+32
+R8
+!i10b 1
+R9
+R27
+R28
+!i113 1
+R12
+R13
+Ecalculatorunit_tb
+Z29 w1543096182
+R3
+R4
+R0
+Z30 8C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit_tb.vhd
+Z31 FC:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit_tb.vhd
+l0
+L4
+VJngiclDMk<NIO?fQQb0oF0
+!s100 So3DbC2h2U1ja`6acdY5Q2
+R7
+32
+R8
+!i10b 1
+R9
+Z32 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit_tb.vhd|
+Z33 !s107 C:/githubRepo/ELE8307/Calculation Unit/CalculatorUnit_tb.vhd|
+!i113 1
+R12
+R13
+Abehave
+R3
+R4
+DEx4 work 17 calculatorunit_tb 0 22 JngiclDMk<NIO?fQQb0oF0
+l44
+L7
+VIB`Ae6<GLhU`W3=e;D?Xf0
+!s100 PM4f<Y1R_C@7T6g<kJkQj2
+R7
+32
+R8
+!i10b 1
+R9
+R32
+R33
+!i113 1
+R12
+R13
+Elinebufferl1
+Z34 w1542832974
+R2
+R3
+R4
+R0
+Z35 8C:/githubRepo/ELE8307/Calculation Unit/LineBufferL1.vhd
+Z36 FC:/githubRepo/ELE8307/Calculation Unit/LineBufferL1.vhd
+l0
+L5
+VPUGUQ:DI63?AWLTP5h@F93
+!s100 d`BfAb54<N@lYQ3=36Ej]2
+R7
+32
+R8
+!i10b 1
+R9
+Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/LineBufferL1.vhd|
+Z38 !s107 C:/githubRepo/ELE8307/Calculation Unit/LineBufferL1.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 12 linebufferl1 0 22 PUGUQ:DI63?AWLTP5h@F93
+l27
+L16
+VRKjR6d1ImGE?>N=`RQmNZ3
+!s100 JH56mzU4?@38fWU_iULQV2
+R7
+32
+R8
+!i10b 1
+R9
+R37
+R38
+!i113 1
+R12
+R13
+Elinebufferl2
+Z39 w1543035042
+R2
+R3
+R4
+R0
+Z40 8C:/githubRepo/ELE8307/Calculation Unit/LineBufferL2.vhd
+Z41 FC:/githubRepo/ELE8307/Calculation Unit/LineBufferL2.vhd
+l0
+L5
+V=HIK<oDR:TGW0;Un`hV=c3
+!s100 7bI`;7XieCD?CNJHbHQ7`0
+R7
+32
+Z42 !s110 1543167915
+!i10b 1
+R9
+Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/LineBufferL2.vhd|
+Z44 !s107 C:/githubRepo/ELE8307/Calculation Unit/LineBufferL2.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 12 linebufferl2 0 22 =HIK<oDR:TGW0;Un`hV=c3
+l27
+L16
+VkR@cmO[cFY_913BGBkYo61
+!s100 IA6_`XzRDfcWnQVeF9G670
+R7
+32
+R42
+!i10b 1
+R9
+R43
+R44
+!i113 1
+R12
+R13
+Elinebufferl3
+Z45 w1543035222
+R2
+R3
+R4
+R0
+Z46 8C:/githubRepo/ELE8307/Calculation Unit/LineBufferL3.vhd
+Z47 FC:/githubRepo/ELE8307/Calculation Unit/LineBufferL3.vhd
+l0
+L5
+VL6@VoCL[6f0=cTP:h4=V32
+!s100 5X>m70hQ3<HJzFTO8aZAf0
+R7
+32
+R42
+!i10b 1
+Z48 !s108 1543167915.000000
+Z49 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/LineBufferL3.vhd|
+Z50 !s107 C:/githubRepo/ELE8307/Calculation Unit/LineBufferL3.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+Z51 DEx4 work 12 linebufferl3 0 22 L6@VoCL[6f0=cTP:h4=V32
+l27
+L16
+Z52 VjNhWY:hj;7`QQ_[9]Og@n1
+Z53 !s100 FMQN^j`>K_0g_`hi:6GDD1
+R7
+32
+R42
+!i10b 1
+R48
+R49
+R50
+!i113 1
+R12
+R13
+Epe
+Z54 w1542672748
+R2
+R3
+R4
+R0
+Z55 8C:/githubRepo/ELE8307/Calculation Unit/PE.vhd
+Z56 FC:/githubRepo/ELE8307/Calculation Unit/PE.vhd
+l0
+L5
+V@dbBza;ciU;5TkCaF3gA>1
+!s100 5;BF3iIbghgZRPR>d:1?L3
+R7
+32
+Z57 !s110 1543167913
+!i10b 1
+Z58 !s108 1543167913.000000
+Z59 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/githubRepo/ELE8307/Calculation Unit/PE.vhd|
+Z60 !s107 C:/githubRepo/ELE8307/Calculation Unit/PE.vhd|
+!i113 1
+R12
+R13
+Artl
+R2
+R3
+R4
+DEx4 work 2 pe 0 22 @dbBza;ciU;5TkCaF3gA>1
+l27
+L14
+VZD4DEVH^LSn9cI41W]>V72
+!s100 ZnK@Z92a5S9:O@aR9CE>Z2
+R7
+32
+R57
+!i10b 1
+R58
+R59
+R60
+!i113 1
+R12
+R13
