@@ -1,0 +1,2 @@
+source /CMC/scripts/xilinx.vivado.2018.2.csh
+setenv DISPLAY srvgrm08:0.0
