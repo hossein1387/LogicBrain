@@ -12,9 +12,9 @@ module window_slide_wrapper
         input  logic clk,
         input  logic rst,
         // ram interface
-        input  logic [DATA_ADDR_WIDTH-1 : 0] ram_in_addr,
-        input  logic [DATA_WIDTH-1      : 0] ram_in_data,
-        input  logic ram_in_wen,
+        output logic [DATA_ADDR_WIDTH-1 : 0] ram_r_addr,
+        input  logic [DATA_WIDTH-1      : 0] ram_r_data,
+        output logic ram_r_wen,
         // control signals
         input  logic start,
         input  logic slide,
@@ -25,9 +25,6 @@ module window_slide_wrapper
     logic pipeline_full, ws_clk, busy, ws_done, ws_valid, done;
     // logic ws_clk_en;
     // RAM control signals
-    logic ram_out_wen;
-    logic [DATA_ADDR_WIDTH-1 : 0] ram_out_addr;
-    logic [DATA_WIDTH-1      : 0] ram_out_data;
 
     // ASM variables
     typedef enum logic[5:0] {IDLE, CLOCK_WS, WAIT_FOR_PIPELINE_FULL, WAIT_FOR_SLIDE, WAIT_FOR_VALID} trans_state_t;
@@ -42,41 +39,28 @@ module window_slide_wrapper
     window_slide_inst( .clk(ws_clk),
                        .rst(rst),
                        .start(start),
-                       .x_in(ram_out_data[0]),
+                       .x_in(ram_r_data[0]),
                        .y_out(y_out),
                        .valid_w(ws_valid),
                        .done(ws_done),
                        .pipeline_full(pipeline_full),
                        .busy(busy));
-    true_d2port_ram#( 
-                        .D_WIDTH   (DATA_WIDTH     ),
-                        .ADDR_WIDTH(DATA_ADDR_WIDTH)
-                    )
-    true_d2port_ram_inst(
-                        .clk(clk),
-                        .we_a(ram_in_wen),
-                        .addr_a(ram_in_addr),
-                        .data_a(ram_in_data),
-                        .we_b(~ram_out_wen),
-                        .addr_b(ram_out_addr),
-                        .db_out(ram_out_data)
-                    );
 
 
     always_ff @(posedge clk) begin
         if(~rst) begin
             next_state   <= IDLE;
             ws_clk       <= 1'b0;
-            ram_out_addr <= 0;
-            ram_out_wen  <= 1'b0;
+            ram_r_addr <= 0;
+            ram_r_wen  <= 1'b0;
             done         <= 1'b0;
         end else begin
             case (next_state)
                 IDLE : begin
                     if(start==1) begin
                         next_state   <= WAIT_FOR_PIPELINE_FULL;
-                        ram_out_wen  <= 1'b1;
-                        ram_out_addr <= 0;
+                        ram_r_wen    <= 1'b1;
+                        ram_r_addr   <= 0;
                         ws_clk       <= 1'b1;
                     end else begin
                         next_state <= IDLE;
@@ -98,14 +82,14 @@ module window_slide_wrapper
                 CLOCK_WS: begin
                     next_state  <= ret_state;
                     ws_clk      <= 1'b1;
-                    ram_out_addr<= ram_out_addr + 1;
+                    ram_r_addr  <= ram_r_addr + 1;
                 end
                 WAIT_FOR_SLIDE : begin
                     if (ws_done==1'b1) begin
-                        next_state   <= IDLE;
-                        ws_clk       <= 1'b0;
-                        ram_out_addr <= 0;
-                        ram_out_wen  <= 1'b0;
+                        next_state <= IDLE;
+                        ws_clk     <= 1'b0;
+                        ram_r_addr <= 0;
+                        ram_r_wen  <= 1'b0;
                     end else begin
                         if(slide==1'b1) begin
                             next_state <= WAIT_FOR_VALID;
