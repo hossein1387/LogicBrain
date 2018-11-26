@@ -1,0 +1,16 @@
+../tb/utils.sv
+../rtl/AccelCoreL1.vhd
+../rtl/AccelCoreL2.vhd
+../rtl/AccelCoreL3.vhd
+../rtl/CalculatorUnit.vhd
+../rtl/controller.sv
+../rtl/LineBufferL1.vhd
+../rtl/LineBufferL2.vhd
+../rtl/LineBufferL3.vhd
+../rtl/line_buffer.sv
+../rtl/neuralcore.sv
+../rtl/PE.vhd
+../rtl/true_dual_port_ram.sv
+../rtl/window_slide.sv
+../rtl/window_slide_wrapper.sv
+../tb/neuralcore_tester.sv
