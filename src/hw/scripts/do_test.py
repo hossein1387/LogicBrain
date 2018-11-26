@@ -32,6 +32,27 @@ def parse_args():
     parser.add_argument('-verbosity', '--verbosity', help='Print log verbosity: VERB_NONE, VERB_LOW, VERB_MEDIUM, VERB_HIGH, VERB_FULL, VERB_DEBUG', required=False)
     args = parser.parse_args()
     return vars(args)
+
+def get_rtl_files(f_file):
+    sv_rtl   = ""
+    vhdl_rtl = ""
+    v_rtl    = ""
+    with open(f_file, 'r') as f:
+        rtls = f.readlines()
+        for rtl in rtls:
+            rtl = rtl.replace("\n", "")
+            if rtl != "":
+                if rtl.lower().endswith(".vhdl") or rtl.lower().endswith(".vhd"):
+                    vhdl_rtl += "{0} ".format(rtl)
+                elif rtl.lower().endswith(".sv") or rtl.lower().endswith(".svh"):
+                    sv_rtl += "{0} ".format(rtl)
+                elif rtl.lower().endswith(".v") or rtl.lower().endswith(".vh"):
+                    v_rtl += "{0} ".format(rtl)
+                else:
+                    util.print_log("unsupported file format: {0}".format(rtl), "ERROR", verbosity="VERB_LOW")
+                    sys.exit()
+    # import ipdb as pdb; pdb.set_trace()
+    return sv_rtl, v_rtl, vhdl_rtl
 #=======================================================================
 # Main
 #=======================================================================
@@ -77,10 +98,24 @@ if __name__ == '__main__':
         if files == None:
             util.print_log("You need to provide f-file", "ERROR", verbosity="VERB_LOW")
             sys.exit()
-        cmd_to_run = "xvlog --sv -f {0} ".format(files)
-        if silence:
-            cmd_to_run += "> /dev/null"
-        util.run_command(cmd_to_run, split=False, verbosity=verbosity)
+        sv_rtl, v_rtl, vhdl_rtl = get_rtl_files(files)
+        # import ipdb as pdb; pdb.set_trace()
+        if sv_rtl != "":
+            cmd_to_run = "xvlog --sv {0} ".format(sv_rtl)
+            if silence:
+                cmd_to_run += "> /dev/null"
+            util.run_command(cmd_to_run, split=False, verbosity=verbosity)
+        if v_rtl != "":
+            cmd_to_run = "xvlog {0} ".format(v_rtl)
+            if silence:
+                cmd_to_run += "> /dev/null"
+            util.run_command(cmd_to_run, split=False, verbosity=verbosity)
+        if vhdl_rtl != "":
+            cmd_to_run = "xvhdl {0} ".format(vhdl_rtl)
+            if silence:
+                cmd_to_run += "> /dev/null"
+            util.run_command(cmd_to_run, split=False, verbosity=verbosity)
+
 
         util.print_banner("Creating snapshot", verbosity=verbosity)
         cmd_to_run = "xelab {0} ".format(top_level)
