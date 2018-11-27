@@ -92,22 +92,34 @@ module neuralcore_tester;
     logic    [OUTPUT_DATA_WIDTH-1 : 0] calcOutput    ;
 
     neural_core # (
-        .DATA_WIDTH         (DATA_WIDTH         ),
-        .DATA_ADDR_WIDTH    (DATA_ADDR_WIDTH    ),
-        .IMAGE_ROW_LEN      (IMAGE_ROW_LEN      ),
-        .IMAGE_COL_LEN      (IMAGE_COL_LEN      ),
-        .KERNEL_SIZE        (KERNEL_SIZE        ),
-        .STRIDE             (STRIDE             ),
-        .NUM_NEURONS_L1     (NUM_NEURONS_L1     ),
-        .NUM_NEURONS_L2     (NUM_NEURONS_L2     ),
-        .NUM_NEURONS_L3     (NUM_NEURONS_L3     ),
-        .NUM_OUTPUT_CLASSES (NUM_OUTPUT_CLASSES ),
-        .INPUT_DATA_WIDTH_L1(INPUT_DATA_WIDTH_L1),
-        .INPUT_DATA_WIDTH_L2(INPUT_DATA_WIDTH_L2),
-        .INPUT_DATA_WIDTH_L3(INPUT_DATA_WIDTH_L3),
-        .OUTPUT_DATA_WIDTH  (OUTPUT_DATA_WIDTH  ),
-        .WEIGHT_DATA_WIDTH  (WEIGHT_DATA_WIDTH  ),
-        .BIAS_DATA_WIDTH    (BIAS_DATA_WIDTH    )
+        .DATA_WIDTH          (DATA_WIDTH          ),
+        .DATA_ADDR_WIDTH     (DATA_ADDR_WIDTH     ),
+        .IMAGE_ROW_LEN       (IMAGE_ROW_LEN       ),
+        .IMAGE_COL_LEN       (IMAGE_COL_LEN       ),
+        .KERNEL_SIZE         (KERNEL_SIZE         ),
+        .STRIDE              (STRIDE              ),
+        .NUM_NEURONS_L1      (NUM_NEURONS_L1      ),
+        .NUM_NEURONS_L2      (NUM_NEURONS_L2      ),
+        .NUM_NEURONS_L3      (NUM_NEURONS_L3      ),
+        .NUM_OUTPUT_CLASSES  (NUM_OUTPUT_CLASSES  ),
+        .INPUT_DATA_WIDTH_L1 (INPUT_DATA_WIDTH_L1 ),
+        .INPUT_DATA_WIDTH_L2 (INPUT_DATA_WIDTH_L2 ),
+        .INPUT_DATA_WIDTH_L3 (INPUT_DATA_WIDTH_L3 ),
+        .OUTPUT_DATA_WIDTH   (OUTPUT_DATA_WIDTH   ),
+        .WEIGHT_DATA_WIDTH   (WEIGHT_DATA_WIDTH   ),
+        .WEIGHT_DATA_WIDTH_L1(WEIGHT_DATA_WIDTH_L1),
+        .WEIGHT_DATA_WIDTH_L2(WEIGHT_DATA_WIDTH_L2),
+        .WEIGHT_DATA_WIDTH_L3(WEIGHT_DATA_WIDTH_L3),
+        .WEIGHT_ADDR_WIDTH_L1(WEIGHT_ADDR_WIDTH_L1),
+        .WEIGHT_ADDR_WIDTH_L2(WEIGHT_ADDR_WIDTH_L2),
+        .WEIGHT_ADDR_WIDTH_L3(WEIGHT_ADDR_WIDTH_L3),
+        .BIAS_DATA_WIDTH     (BIAS_DATA_WIDTH     ),
+        .BIAS_DATA_WIDTH_L1  (BIAS_DATA_WIDTH_L1  ),
+        .BIAS_DATA_WIDTH_L2  (BIAS_DATA_WIDTH_L2  ),
+        .BIAS_DATA_WIDTH_L3  (BIAS_DATA_WIDTH_L3  ),
+        .BIAS_ADDR_WIDTH_L1  (BIAS_ADDR_WIDTH_L1  ),
+        .BIAS_ADDR_WIDTH_L2  (BIAS_ADDR_WIDTH_L2  ),
+        .BIAS_ADDR_WIDTH_L3  (BIAS_ADDR_WIDTH_L3  )
     )
     neural_core_inst
     (
@@ -147,7 +159,7 @@ module neuralcore_tester;
                         .we_a       (ws_ram_w_wen),
                         .data_a     (ws_ram_w_data),
                         .addr_a     (ws_ram_w_addr),
-                        .we_b       (ws_ram_r_wen),
+                        .we_b       (~ws_ram_r_wen),
                         .addr_b     (ws_ram_r_addr),
                         .db_out     (ws_ram_r_data)
                     );
@@ -161,7 +173,7 @@ module neuralcore_tester;
                         .we_a       (weight_w_ren_l1),
                         .data_a     (weight_w_data_l1),
                         .addr_a     (weight_w_addr_l1),
-                        .we_b       (weight_r_ren_l1),
+                        .we_b       (~weight_r_ren_l1),
                         .addr_b     (weight_r_addr_l1),
                         .db_out     (weight_r_data_l1)
                     );
@@ -175,7 +187,7 @@ module neuralcore_tester;
                         .we_a       (weight_w_ren_l2),
                         .data_a     (weight_w_data_l2),
                         .addr_a     (weight_w_addr_l2),
-                        .we_b       (weight_r_ren_l2),
+                        .we_b       (~weight_r_ren_l2),
                         .addr_b     (weight_r_addr_l2),
                         .db_out     (weight_r_data_l2)
                     );
@@ -189,7 +201,7 @@ module neuralcore_tester;
                         .we_a       (weight_w_ren_l3),
                         .data_a     (weight_w_data_l3),
                         .addr_a     (weight_w_addr_l3),
-                        .we_b       (weight_r_ren_l3),
+                        .we_b       (~weight_r_ren_l3),
                         .addr_b     (weight_r_addr_l3),
                         .db_out     (weight_r_data_l3)
                     );
@@ -203,7 +215,7 @@ module neuralcore_tester;
                         .we_a       (bias_w_ren_l1),
                         .data_a     (bias_w_data_l1),
                         .addr_a     (bias_w_addr_l1),
-                        .we_b       (bias_r_ren_l1),
+                        .we_b       (~bias_r_ren_l1),
                         .addr_b     (bias_r_addr_l1),
                         .db_out     (bias_r_data_l1)
                     );
@@ -217,7 +229,7 @@ module neuralcore_tester;
                         .we_a       (bias_w_ren_l2),
                         .data_a     (bias_w_data_l2),
                         .addr_a     (bias_w_addr_l2),
-                        .we_b       (bias_r_ren_l2),
+                        .we_b       (~bias_r_ren_l2),
                         .addr_b     (bias_r_addr_l2),
                         .db_out     (bias_r_data_l2)
                     );
@@ -232,7 +244,7 @@ module neuralcore_tester;
                         .we_a       (bias_w_ren_l3),
                         .data_a     (bias_w_data_l3),
                         .addr_a     (bias_w_addr_l3),
-                        .we_b       (bias_r_ren_l3),
+                        .we_b       (~bias_r_ren_l3),
                         .addr_b     (bias_r_addr_l3),
                         .db_out     (bias_r_data_l3)
                     );
@@ -243,6 +255,7 @@ module neuralcore_tester;
 // Test Bench Main thread:
     initial begin
         `print_banner("INFO", "Testing Neural Core", VERB_LOW)
+        ws_start = 1'b0;
         #1us;
         load_image();
         load_weights_l1();
@@ -251,13 +264,17 @@ module neuralcore_tester;
         load_bias_l2();
         load_weights_l3();
         load_bias_l3();
+        @(posedge clk); 
+        ws_start = 1'b1;
+        @(posedge clk); 
+        ws_start = 1'b0;
         #10us;
         @(posedge clk);
         #50us;
         // for (int i = 0; i < 100000; i++) begin
         //     slide_ws();
         // end
-        #100us;
+        #120ms;
         //write_to_output();
         $finish();
     end
