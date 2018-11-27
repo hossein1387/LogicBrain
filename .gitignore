@@ -1,0 +1,12 @@
+*.str
+*.debug
+*.npy
+*.jou
+*.log
+*.wdb
+*.pb
+*.dir/
+*.nfs*
+*.vcd
+*._*
+__pycache__
