@@ -46,7 +46,8 @@ begin
         case current_s is
             when Idle => if(doneIn = '1') then
                             next_s <= Shift;
-                            bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            --bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            bufferValues_f <= bufferValues_p(62 downto 0) & valueIn;
                          else
                             next_s <= Idle;
                             bufferValues_f <= (others => '0');
@@ -55,7 +56,8 @@ begin
 
             when Shift => if(doneIn = '1') then
                             next_s <= Shift;
-                            bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            --bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            bufferValues_f <= bufferValues_p(62 downto 0) & valueIn;
                             valid_f <= '0';
                           else
                             next_s <= Valid;
@@ -65,7 +67,8 @@ begin
             
             when Valid => if(doneIn = '1') then
                             next_s <= Shift;
-                            bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            --bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            bufferValues_f <= bufferValues_p(62 downto 0) & valueIn;
                           else
                             next_s <= WaitState;
                             bufferValues_f <= bufferValues_p;
@@ -77,7 +80,8 @@ begin
                               bufferValues_f <= bufferValues_p;
                            else
                               next_s <= Shift;
-                              bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                              --bufferValues_f <= valueIn & bufferValues_p(63 downto 1);
+                            bufferValues_f <= bufferValues_p(62 downto 0) & valueIn;
                            end if;
                            valid_f <= '0';
         end case;
