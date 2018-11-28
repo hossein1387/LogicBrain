@@ -64,7 +64,8 @@ module neural_core
         output logic bias_ren_l3   ,
 
         // CalculUnit Interface
-        output logic [OUTPUT_DATA_WIDTH-1    : 0] calcOutput
+        output logic [OUTPUT_DATA_WIDTH-1    : 0] calcOutput,
+        output logic                              done
     );
 
     logic image_window[KERNEL_SIZE*KERNEL_SIZE-1:0];
@@ -148,7 +149,7 @@ module neural_core
     CalculatorUnit CalculatorUnit_inst
                     (
                                 .clk           (clk          ),
-                                .reset         (reset        ),
+                                .reset         (~rst         ),
                                 .start         (ws_valid     ),
                                 .I1            (image_window ),
                                 .W1            (weight_out_l1),
@@ -162,5 +163,7 @@ module neural_core
                                 .valid_3       (valid_3      ),
                                 .calcOutput    (calcOutput   )
                     );
+
+    assign done = valid_3;
 
 endmodule

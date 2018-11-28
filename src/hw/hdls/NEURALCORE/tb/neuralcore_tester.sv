@@ -4,6 +4,7 @@ import utils::*;
 module neuralcore_tester;
 //==================================================================================================
 // Global Variables
+    localparam CLOCK_SPEED          = 50; // 10MHZ
     localparam IMAGE_ROW_LEN        = 200;
     localparam IMAGE_COL_LEN        = 60;
     localparam IMAGE_SIZE           = IMAGE_ROW_LEN*IMAGE_COL_LEN;
@@ -34,6 +35,9 @@ module neuralcore_tester;
     localparam BIAS_ADDR_WIDTH_L2   = $clog2(INPUT_DATA_WIDTH_L3+1);
     localparam BIAS_ADDR_WIDTH_L3   = $clog2(NUM_OUTPUT_CLASSES+1);
     localparam INPUT_IMG            = "input_img.txt";
+    localparam OUTPUT_VALUES        = "output_values.txt";
+
+    static int out_cnt  = 0;
 
     logic                              clk           ;
     logic                              rst           ;
@@ -89,7 +93,8 @@ module neuralcore_tester;
     logic   [BIAS_ADDR_WIDTH_L3-1 : 0] bias_w_addr_l3  ;
     logic                              bias_w_ren_l3   ;
 
-    logic    [OUTPUT_DATA_WIDTH-1 : 0] calcOutput    ;
+    logic    [OUTPUT_DATA_WIDTH-1 : 0] calcOutput      ;
+    logic                              done            ;
 
     neural_core # (
         .DATA_WIDTH          (DATA_WIDTH          ),
@@ -147,7 +152,8 @@ module neuralcore_tester;
         .bias_data_l3  (bias_r_data_l3  ),
         .bias_addr_l3  (bias_r_addr_l3  ),
         .bias_ren_l3   (bias_r_ren_l3   ),
-        .calcOutput    (calcOutput    )
+        .calcOutput    (calcOutput      ),
+        .done          (done            )
     );
 
     true_d2port_ram #(
@@ -250,6 +256,19 @@ module neuralcore_tester;
                     );
 
 //==================================================================================================
+// Read Outputs
+//==================================================================================================
+    initial begin
+        static int file_id  = 0;
+        file_id = $fopen(OUTPUT_VALUES, "w");
+        while(1) begin
+            @(posedge done)
+            $fwrite(file_id,"%b\n", calcOutput);
+            out_cnt += 1;
+        end
+    end
+
+//==================================================================================================
 // Reading binary file
 //==================================================================================================
 // Test Bench Main thread:
@@ -274,7 +293,7 @@ module neuralcore_tester;
         // for (int i = 0; i < 100000; i++) begin
         //     slide_ws();
         // end
-        #120ms;
+        #12000ms;
         //write_to_output();
         $finish();
     end
@@ -306,6 +325,7 @@ module neuralcore_tester;
         @(posedge clk);
         for (int i=0; i<NUM_NEURONS_L1; i++) begin
             weight_w_data_l1 = weight_l1[i];
+            `test_print("INFO", $sformatf("Loading w_l1[%0d]=%p ", weight_w_addr_l1, weight_w_data_l1), VERB_HIGH)
             @(posedge clk);
             weight_w_addr_l1  += 1;
         end
@@ -385,25 +405,26 @@ module neuralcore_tester;
     end
 
     initial begin 
-        #50ns;
+        #((CLOCK_SPEED)*1ns);
         clk = 1;
         rst = 1;
-        #50ns;
+        #((CLOCK_SPEED)*1ns);
         clk = 0;
         rst = 1;
-        #50ns;
+        #((CLOCK_SPEED)*1ns);
         clk = 1;
         rst = 0;
-        #50ns;
+        #((CLOCK_SPEED)*1ns);
         rst = 1;
         clk = 0;
         forever begin
-          #50ns clk = !clk;
+            #((CLOCK_SPEED)*1ns) clk = !clk;
         end
     end
 
     initial begin
-        #600ms;
+        #2000ms;
+        `print_banner("INFO", $sformatf("Hardware Generated %0d outputs", out_cnt), VERB_LOW)
         $display("Simulation took more than expected ( more than 600ms)");
         $finish();
     end
