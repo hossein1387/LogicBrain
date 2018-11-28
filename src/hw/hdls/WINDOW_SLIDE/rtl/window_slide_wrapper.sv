@@ -121,6 +121,6 @@ module window_slide_wrapper
     // always_ff @(posedge clk) begin
     //     $display("state=%d, start=%d\n", next_state, start);
     // end
-    assign valid = clk & ws_clk & done;
+    assign valid = ws_clk & done;
 
 endmodule
