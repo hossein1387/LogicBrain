@@ -119,10 +119,12 @@ module controller
                         weight_ren_l1 <= 1'b0;
                         bias_addr_l1  <= 0;
                         weight_addr_l1<= 0;
+                        neuron_cnt    <= 0;
                     end else begin
                         next_state    <= CALC_L1;
                         bias_addr_l1  <= bias_addr_l1 + 1;
                         weight_addr_l1<= weight_addr_l1 + 1;
+                        neuron_cnt    <= neuron_cnt + 1;
                     end
                 end
                 CALC_L2: begin
@@ -132,10 +134,12 @@ module controller
                         weight_ren_l2 <= 1'b0;
                         bias_addr_l2  <= 0;
                         weight_addr_l2<= 0;
+                        neuron_cnt    <= 0;
                     end else begin
                         next_state <= CALC_L2;
                         bias_addr_l2  <= bias_addr_l2 + 1;
                         weight_addr_l2<= weight_addr_l2 + 1;
+                        neuron_cnt    <= neuron_cnt + 1;
                     end
                 end
                 CALC_L3 : begin
@@ -145,10 +149,12 @@ module controller
                         weight_ren_l3 <= 1'b0;
                         bias_addr_l3  <= 0;
                         weight_addr_l3<= 0;
+                        neuron_cnt    <= 0;
                     end else begin
                         next_state    <= CALC_L3;
                         bias_addr_l3  <= bias_addr_l3 + 1;
                         weight_addr_l3<= weight_addr_l3 + 1;
+                        neuron_cnt    <= neuron_cnt + 1;
                     end
                 end
             endcase
