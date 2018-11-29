@@ -155,106 +155,75 @@ module neuralcore_tester;
         .calcOutput    (calcOutput      ),
         .done          (done            )
     );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (DATA_WIDTH     ),
-                        .ADDR_WIDTH (DATA_ADDR_WIDTH)
-                    )
-    image_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (ws_ram_w_wen),
-                        .data_a     (ws_ram_w_data),
-                        .addr_a     (ws_ram_w_addr),
-                        .we_b       (~ws_ram_r_wen),
-                        .addr_b     (ws_ram_r_addr),
-                        .db_out     (ws_ram_r_data)
-                    );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (WEIGHT_DATA_WIDTH_L1),
-                        .ADDR_WIDTH (WEIGHT_ADDR_WIDTH_L1)
-                    )
-    w1_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (weight_w_ren_l1),
-                        .data_a     (weight_w_data_l1),
-                        .addr_a     (weight_w_addr_l1),
-                        .we_b       (~weight_r_ren_l1),
-                        .addr_b     (weight_r_addr_l1),
-                        .db_out     (weight_r_data_l1)
-                    );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (WEIGHT_DATA_WIDTH_L2),
-                        .ADDR_WIDTH (WEIGHT_ADDR_WIDTH_L2)
-                    )
-    w2_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (weight_w_ren_l2),
-                        .data_a     (weight_w_data_l2),
-                        .addr_a     (weight_w_addr_l2),
-                        .we_b       (~weight_r_ren_l2),
-                        .addr_b     (weight_r_addr_l2),
-                        .db_out     (weight_r_data_l2)
-                    );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (WEIGHT_DATA_WIDTH_L3),
-                        .ADDR_WIDTH (WEIGHT_ADDR_WIDTH_L3)
-                    )
-    w3_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (weight_w_ren_l3),
-                        .data_a     (weight_w_data_l3),
-                        .addr_a     (weight_w_addr_l3),
-                        .we_b       (~weight_r_ren_l3),
-                        .addr_b     (weight_r_addr_l3),
-                        .db_out     (weight_r_data_l3)
-                    );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (BIAS_DATA_WIDTH_L1),
-                        .ADDR_WIDTH (BIAS_ADDR_WIDTH_L1)
-                    )
-    b1_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (bias_w_ren_l1),
-                        .data_a     (bias_w_data_l1),
-                        .addr_a     (bias_w_addr_l1),
-                        .we_b       (~bias_r_ren_l1),
-                        .addr_b     (bias_r_addr_l1),
-                        .db_out     (bias_r_data_l1)
-                    );
-
-    true_d2port_ram #(
-                        .D_WIDTH    (BIAS_DATA_WIDTH_L2),
-                        .ADDR_WIDTH (BIAS_ADDR_WIDTH_L2)
-                    )
-    b2_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (bias_w_ren_l2),
-                        .data_a     (bias_w_data_l2),
-                        .addr_a     (bias_w_addr_l2),
-                        .we_b       (~bias_r_ren_l2),
-                        .addr_b     (bias_r_addr_l2),
-                        .db_out     (bias_r_data_l2)
-                    );
-
-
-    true_d2port_ram #(
-                        .D_WIDTH    (BIAS_DATA_WIDTH_L3),
-                        .ADDR_WIDTH (BIAS_ADDR_WIDTH_L3)
-                    )
-    b3_ram_inst     (
-                        .clk        (clk),
-                        .we_a       (bias_w_ren_l3),
-                        .data_a     (bias_w_data_l3),
-                        .addr_a     (bias_w_addr_l3),
-                        .we_b       (~bias_r_ren_l3),
-                        .addr_b     (bias_r_addr_l3),
-                        .db_out     (bias_r_data_l3)
-                    );
-
+    mega_ram #(
+            .DATA_WIDTH          (DATA_WIDTH           ),
+            .DATA_ADDR_WIDTH     (DATA_ADDR_WIDTH      ),
+            .NUM_OUTPUT_CLASSES  (NUM_OUTPUT_CLASSES   ),
+            .INPUT_DATA_WIDTH_L1 (INPUT_DATA_WIDTH_L1  ),
+            .INPUT_DATA_WIDTH_L2 (INPUT_DATA_WIDTH_L2  ),
+            .INPUT_DATA_WIDTH_L3 (INPUT_DATA_WIDTH_L3  ),
+            .WEIGHT_DATA_WIDTH   (WEIGHT_DATA_WIDTH    ),
+            .WEIGHT_DATA_WIDTH_L1(WEIGHT_DATA_WIDTH_L1 ),
+            .WEIGHT_DATA_WIDTH_L2(WEIGHT_DATA_WIDTH_L2 ),
+            .WEIGHT_DATA_WIDTH_L3(WEIGHT_DATA_WIDTH_L3 ),
+            .WEIGHT_ADDR_WIDTH_L1(WEIGHT_ADDR_WIDTH_L1 ),
+            .WEIGHT_ADDR_WIDTH_L2(WEIGHT_ADDR_WIDTH_L2 ),
+            .WEIGHT_ADDR_WIDTH_L3(WEIGHT_ADDR_WIDTH_L3 ),
+            .BIAS_DATA_WIDTH     (BIAS_DATA_WIDTH      ),
+            .BIAS_DATA_WIDTH_L1  (BIAS_DATA_WIDTH_L1   ),
+            .BIAS_DATA_WIDTH_L2  (BIAS_DATA_WIDTH_L2   ),
+            .BIAS_DATA_WIDTH_L3  (BIAS_DATA_WIDTH_L3   ),
+            .BIAS_ADDR_WIDTH_L1  (BIAS_ADDR_WIDTH_L1   ),
+            .BIAS_ADDR_WIDTH_L2  (BIAS_ADDR_WIDTH_L2   ),
+            .BIAS_ADDR_WIDTH_L3  (BIAS_ADDR_WIDTH_L3   )
+            )
+    mega_ram_inst
+            (
+            .clk             (clk              ),
+            .rst             (rst              ),
+            .ws_ram_r_addr   (ws_ram_r_addr    ),
+            .ws_ram_r_data   (ws_ram_r_data    ),
+            .ws_ram_r_wen    (ws_ram_r_wen     ),
+            .ws_ram_w_addr   (ws_ram_w_addr    ),
+            .ws_ram_w_data   (ws_ram_w_data    ),
+            .ws_ram_w_wen    (ws_ram_w_wen     ),
+            .weight_r_data_l1(weight_r_data_l1 ),
+            .weight_r_addr_l1(weight_r_addr_l1 ),
+            .weight_r_ren_l1 (weight_r_ren_l1  ),
+            .weight_w_data_l1(weight_w_data_l1 ),
+            .weight_w_addr_l1(weight_w_addr_l1 ),
+            .weight_w_ren_l1 (weight_w_ren_l1  ),
+            .bias_r_data_l1  (bias_r_data_l1   ),
+            .bias_r_addr_l1  (bias_r_addr_l1   ),
+            .bias_r_ren_l1   (bias_r_ren_l1    ),
+            .bias_w_data_l1  (bias_w_data_l1   ),
+            .bias_w_addr_l1  (bias_w_addr_l1   ),
+            .bias_w_ren_l1   (bias_w_ren_l1    ),
+            .weight_r_data_l2(weight_r_data_l2 ),
+            .weight_r_addr_l2(weight_r_addr_l2 ),
+            .weight_r_ren_l2 (weight_r_ren_l2  ),
+            .weight_w_data_l2(weight_w_data_l2 ),
+            .weight_w_addr_l2(weight_w_addr_l2 ),
+            .weight_w_ren_l2 (weight_w_ren_l2  ),
+            .bias_r_data_l2  (bias_r_data_l2   ),
+            .bias_r_addr_l2  (bias_r_addr_l2   ),
+            .bias_r_ren_l2   (bias_r_ren_l2    ),
+            .bias_w_data_l2  (bias_w_data_l2   ),
+            .bias_w_addr_l2  (bias_w_addr_l2   ),
+            .bias_w_ren_l2   (bias_w_ren_l2    ),
+            .weight_r_data_l3(weight_r_data_l3 ),
+            .weight_r_addr_l3(weight_r_addr_l3 ),
+            .weight_r_ren_l3 (weight_r_ren_l3  ),
+            .weight_w_data_l3(weight_w_data_l3 ),
+            .weight_w_addr_l3(weight_w_addr_l3 ),
+            .weight_w_ren_l3 (weight_w_ren_l3  ),
+            .bias_r_data_l3  (bias_r_data_l3   ),
+            .bias_r_addr_l3  (bias_r_addr_l3   ),
+            .bias_r_ren_l3   (bias_r_ren_l3    ),
+            .bias_w_data_l3  (bias_w_data_l3   ),
+            .bias_w_addr_l3  (bias_w_addr_l3   ),
+            .bias_w_ren_l3   (bias_w_ren_l3    ) 
+        );
 //==================================================================================================
 // Read Outputs
 //==================================================================================================
