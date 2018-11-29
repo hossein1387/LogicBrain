@@ -51,8 +51,8 @@ module window_slide_wrapper
         if(~rst) begin
             next_state   <= IDLE;
             ws_clk       <= 1'b0;
-            ram_r_addr <= 0;
-            ram_r_wen  <= 1'b0;
+            ram_r_addr   <= 0;
+            ram_r_wen    <= 1'b0;
             done         <= 1'b0;
         end else begin
             case (next_state)
@@ -113,6 +113,13 @@ module window_slide_wrapper
                         ws_clk      <= 1'b0;
                         done        <= 1'b0;
                     end
+                end
+                default: begin
+                    next_state   <= IDLE;
+                    ws_clk       <= 1'b0;
+                    ram_r_addr   <= 0;
+                    ram_r_wen    <= 1'b0;
+                    done         <= 1'b0;
                 end
             endcase
         end

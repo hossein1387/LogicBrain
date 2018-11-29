@@ -157,6 +157,22 @@ module controller
                         neuron_cnt    <= neuron_cnt + 1;
                     end
                 end
+                default: begin
+                    neuron_cnt    <= 0;
+                    next_state    <= IDLE;
+                    bias_ren_l1   <= 1'b0;
+                    bias_ren_l2   <= 1'b0;
+                    bias_ren_l3   <= 1'b0;
+                    weight_ren_l1 <= 1'b0;
+                    weight_ren_l2 <= 1'b0;
+                    weight_ren_l3 <= 1'b0;
+                    weight_addr_l1<= 0;
+                    weight_addr_l2<= 0;
+                    weight_addr_l3<= 0;
+                    bias_addr_l1  <= 0;
+                    bias_addr_l2  <= 0;
+                    bias_addr_l3  <= 0;
+                end
             endcase
         end
     end
