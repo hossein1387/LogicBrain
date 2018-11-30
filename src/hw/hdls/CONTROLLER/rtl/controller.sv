@@ -136,7 +136,7 @@ module controller
                         weight_addr_l2<= 0;
                         neuron_cnt    <= 0;
                     end else begin
-                        next_state <= CALC_L2;
+                        next_state    <= CALC_L2;
                         bias_addr_l2  <= bias_addr_l2 + 1;
                         weight_addr_l2<= weight_addr_l2 + 1;
                         neuron_cnt    <= neuron_cnt + 1;

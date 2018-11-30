@@ -1,6 +1,6 @@
 `default_nettype wire
 
-module neural_core
+module neuralcore
     #(
         parameter DATA_WIDTH           = 8,
         parameter DATA_ADDR_WIDTH      = 10,
@@ -68,7 +68,7 @@ module neural_core
         output logic                              done
     );
 
-    logic image_window[KERNEL_SIZE*KERNEL_SIZE-1:0];
+    logic [KERNEL_SIZE*KERNEL_SIZE-1:0] image_window;
     logic ws_valid, valid_1, valid_2, valid_3;
     logic [WEIGHT_DATA_WIDTH_L1-1 : 0] weight_out_l1;
     logic [WEIGHT_DATA_WIDTH_L2-1 : 0] weight_out_l2;

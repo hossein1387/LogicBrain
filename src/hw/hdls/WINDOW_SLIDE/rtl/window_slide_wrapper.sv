@@ -19,7 +19,7 @@ module window_slide_wrapper
         input  logic start,
         input  logic slide,
         //output signals
-        output logic y_out[KERNEL_SIZE*KERNEL_SIZE-1:0],
+        output logic [KERNEL_SIZE*KERNEL_SIZE-1:0] y_out,
         output logic valid
     );  
     logic pipeline_full, ws_clk, busy, ws_done, ws_valid, done;
@@ -54,6 +54,7 @@ module window_slide_wrapper
             ram_r_addr   <= 0;
             ram_r_wen    <= 1'b0;
             done         <= 1'b0;
+            ret_state    <= IDLE;
         end else begin
             case (next_state)
                 IDLE : begin

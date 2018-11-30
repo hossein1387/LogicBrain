@@ -96,7 +96,7 @@ module neuralcore_tester;
     logic    [OUTPUT_DATA_WIDTH-1 : 0] calcOutput      ;
     logic                              done            ;
 
-    neural_core # (
+    neuralcore # (
         .DATA_WIDTH          (DATA_WIDTH          ),
         .DATA_ADDR_WIDTH     (DATA_ADDR_WIDTH     ),
         .IMAGE_ROW_LEN       (IMAGE_ROW_LEN       ),
@@ -126,7 +126,7 @@ module neuralcore_tester;
         .BIAS_ADDR_WIDTH_L2  (BIAS_ADDR_WIDTH_L2  ),
         .BIAS_ADDR_WIDTH_L3  (BIAS_ADDR_WIDTH_L3  )
     )
-    neural_core_inst
+    neuralcore_inst
     (
         .clk           (clk             ),
         .rst           (rst             ),
@@ -232,6 +232,7 @@ module neuralcore_tester;
         file_id = $fopen(OUTPUT_VALUES, "w");
         while(1) begin
             @(posedge done)
+            `test_print("INFO", $sformatf("[%4d] out=%b", out_cnt, calcOutput), VERB_LOW)
             $fwrite(file_id,"%b\n", calcOutput);
             out_cnt += 1;
         end
