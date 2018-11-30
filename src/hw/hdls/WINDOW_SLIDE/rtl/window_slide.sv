@@ -85,7 +85,7 @@ module window_slide
 
 //==================================================================================================
 // Circuit to detect image boundary
-    always @(posedge clk) begin
+    always @(posedge clk or negedge rst) begin
         if(~rst) begin
             pixel_cnt      <= {32{1'b1}};
             col_pixel_cnt  <= 32'b1;
