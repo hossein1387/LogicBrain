@@ -10,7 +10,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "Image.h"
-
+#include <iostream>
+#include <fstream>
 
 #define MAKE_TERNARY_THRESHOLD 0.3
 
@@ -33,12 +34,10 @@ void NNLayer::init(int new_n_input, int new_n_neuron) {
     n_input = new_n_input;
     n_neuron = new_n_neuron;
 
-    bias = new BYTE[n_neuron];
+    bias = new float[n_neuron];
 
-    weight = new BYTE[n_neuron*n_input];
-    value = new BYTE[n_neuron];
-	accelCore_ = new AccelCore((n_input/8));
-
+    weight = new float[n_neuron*n_input];
+    value = new float[n_neuron];
 }
 
 int MYrand() {
@@ -51,29 +50,75 @@ float NNLayer::rand_FloatRange(float a, float b) {
     return ((b-a)*((float)MYrand()/0x7FFFFFFF))+a;
 }
 
-BYTE NNLayer::makeTernaryExtra(float fvalue){
-    if (fvalue >= 0.4) {
-        return 1;
-    } else if(fvalue <=-0.4){
-        return -1;
-    } else {
-        return 0;
-    }
-}
-
 void NNLayer::random_init(int new_n_input, int new_n_neuron) {
     // TODO Auto-generated constructor stub
     init(new_n_input, new_n_neuron);
 
-    bias = new BYTE[n_neuron];
+    bias = new float[n_neuron];
 
-    BYTE * cur_weight = weight;
+    float * cur_weight = weight;
     for (int i=0; i<n_neuron; i++) {
-        bias[i] = makeTernaryExtra(rand_FloatRange(-log2(new_n_input),log2(new_n_input)));
+        bias[i] = rand_FloatRange(-log2(new_n_input),log2(new_n_input));
         for (int j=0; j<n_input; j++) {
-            *(cur_weight++) = makeTernaryExtra(rand_FloatRange(-1,1));
+            *(cur_weight++) = rand_FloatRange(-1,1);
         }
     }
+}
+
+int get_demo_weight(int layer, int neuron, int input) {
+    unsigned seed=0x1234567;
+    unsigned state = seed + ((layer * 1031)+neuron)*1031+input;
+
+    for (int i=0;i<32;i++) {
+        unsigned low = state & 0xFFFF;
+        unsigned high = state >> 16;
+        low+=(high * 0x158F);
+        low &= 0xFFFF;
+        state = (low <<17) + (high <<1) + (low >>15);
+    }
+    state = state&3;
+
+    int result = 0;
+    if (state != 3) result = state-1;
+    return result;
+}
+
+int get_demo_bias(int layer, int neuron, int nb_input) {
+    unsigned long seed=0x1234567;
+    unsigned state = seed + ((layer * 1031) + neuron) * (neuron + 1);
+
+    for (int i=0;i<32;i++) {
+        unsigned low = state & 0xFFFF;
+        unsigned high = state >> 16;
+        low+=(high * 0x158F);
+        low &= 0xFFFF;
+        state = (low <<17) + (high <<1) + (low >>15);
+    }
+    int result = state;
+    if (nb_input>=256) result>>=28;
+    else if (nb_input>=16) result>>=29;
+    else if (nb_input>=4) return result>>=30;
+    else result = 0;
+    return result;
+}
+
+
+void NNLayer::demo_init(int layer, int new_n_input, int new_n_neuron) {
+    // TODO Auto-generated constructor stub
+    init(new_n_input, new_n_neuron);
+
+    bias = new float[n_neuron];
+
+    float * cur_weight = weight;
+    for (int i=0; i<n_neuron; i++) {
+        bias[i] = get_demo_bias(layer, i, new_n_input);
+        for (int j=0; j<n_input; j++) {
+            *(cur_weight++) = get_demo_weight(layer,i,j);
+        }
+    }
+    this->layer_num = layer;
+    sprintf(weight_file_name, "weight_l%0d.txt", layer);
+    sprintf(bias_file_name, "bias_l%0d.txt", layer);
 }
 
 int vector_weight(int x) {
@@ -86,7 +131,7 @@ int vector_weight(int x) {
 }
 
 void NNLayer::make_ternary() {
-    BYTE * cur_weight = weight;
+    float * cur_weight = weight;
     for (int i=0; i<n_neuron; i++) {
         bias[i] = trunc(bias[i]);
         for (int j=0; j<n_input; j++) {
@@ -100,34 +145,28 @@ void NNLayer::make_ternary() {
 
 NNLayer::~NNLayer() {
     // TODO Auto-generated destructor stub
-	delete accelCore_;
 }
 
 //Edit this function for ternary logic
-BYTE NNLayer::fct(BYTE x) {
-//	return 1.0/(1.0+exp(-x));
-	if (x>0) return 1.0;
-	else return 0;
+float NNLayer::fct(float x) {
+//  return 1.0/(1.0+exp(-x));
+    if (x>0) return 1.0;
+    else return 0;
 }
 
-BYTE * NNLayer::propagate(BYTE * source) {
-	// TODO Auto-generated constructor stub
-	BYTE * cur_weight = weight;
+float * NNLayer::propagate(float * source) {
+    // TODO Auto-generated constructor stub
+    float * cur_weight = weight;
 
+    for (int i=0; i<n_neuron; i++) {
+        float acc = bias[i];
 
-	for (int i=0; i<n_neuron; i++) {
-		BYTE acc = bias[i];
-		BYTE acc_hw = 0;
-		acc_hw = accelCore_->apply(source, cur_weight, n_input, n_input, bias[i]);
-		for (int j=0; j<n_input; j++) {
-			acc += *(cur_weight++) * source[j];
-		}
-		assert(fct(acc) == acc_hw);
-		//printf("old %i, new %i \n", fct(acc), acc_hw);
-		value[i] = fct(acc); //Binary result
-		value[i] = acc_hw; //Binary result
-	}
-	return value;
+        for (int j=0; j<n_input; j++) {
+            acc += *(cur_weight++) * source[j];
+        }
+        value[i] = fct(acc);
+    }
+    return value;
 }
 
 void NNLayer::print_activation() {
@@ -140,7 +179,7 @@ void NNLayer::print_activation() {
 void NNLayer::print() {
     // TODO Auto-generated constructor stub
 
-	BYTE * cur_weight = weight;
+    float * cur_weight = weight;
 
     for (int i=0; i<n_neuron; i++) {
         printf("Neuron %i: %f, {", i+1, bias[i]);
@@ -152,3 +191,27 @@ void NNLayer::print() {
     }
 }
 
+void NNLayer::save_weights_and_bias()
+{
+    std::ofstream weight_file;
+    weight_file.open (weight_file_name);
+    for(int i=0; i<n_neuron*n_input; i++)
+    {
+        // printf("%0.0f\n", weight[i]);
+        char str_tmp[50];
+        sprintf(str_tmp, "%0.0f\n", weight[i]);
+        weight_file << str_tmp;
+    }
+    weight_file.close();
+
+    std::ofstream bias_file;
+    bias_file.open (bias_file_name);
+    for(int i=0; i<n_neuron; i++)
+    {
+        // printf("%0.0f\n", weight[i]);
+        char str_tmp[50];
+        sprintf(str_tmp, "%0.0f\n", bias[i]);
+        bias_file << str_tmp;
+    }
+    bias_file.close();
+}
