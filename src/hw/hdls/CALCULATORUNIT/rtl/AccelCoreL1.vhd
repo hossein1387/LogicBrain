@@ -29,7 +29,7 @@ architecture rtl of AccelCoreL1 is
     end function TO_STD_LOGIC;
 
     -- State definition
-    type state_T is (Idle, Proc, EndP);
+    type state_T is (Idle, Proc, Proc2, EndP);
     -- Process signals
     signal current_s, next_s: state_T;
     signal done_p, done_f: std_logic;
@@ -37,7 +37,8 @@ architecture rtl of AccelCoreL1 is
     -- Other signals
     signal imageIn_p:  STD_LOGIC_VECTOR(255 downto 0);
     signal imageIn_f:  STD_LOGIC_VECTOR(255 downto 0);
-    signal peOutputArray: STD_LOGIC_VECTOR(159 downto 0);
+    signal peOutputArray, peOutputArray_q: STD_LOGIC_VECTOR(159 downto 0);
+    signal biasIn_q: STD_LOGIC_VECTOR(1 downto 0);
     signal peErrorDetectArray: STD_LOGIC_VECTOR(31 downto 0);
     signal sumPEs:     STD_LOGIC_VECTOR(31 downto 0);
     signal activation_p: STD_LOGIC;
@@ -66,12 +67,12 @@ begin
         PE_X: PE port map(
              weightInput => weightIn(16*(I+1) - 1 downto 16*I),
              imageInput => imageIn_f(8*(I+1) - 1 downto 8*I), 
-             peOutput => peOutputArray(5*(I+1) -1 downto 5*I), 
+             peOutput => peOutputArray_q(5*(I+1) -1 downto 5*I), 
              errorDetect => peErrorDetectArray(I)
         );
     end generate;
 
-    asynchrone_Logic1: process(peOutputArray, peErrorDetectArray)
+    asynchrone_Logic1: process(peOutputArray, peErrorDetectArray, biasIn_q)
     begin
        -- for I in 0 to 31 generate
         --    weightInput(I) <= weightIn_q(16*(I+1) - 1 downto 16*I);
@@ -110,7 +111,7 @@ begin
                 + resize(signed(peOutputArray(14 downto 10)), sumPEs'length) 
                 + resize(signed(peOutputArray(9 downto 5)), sumPEs'length)
                 + resize(signed(peOutputArray(4 downto 0)), sumPEs'length)
-                + resize(signed(biasIn), sumPEs'length));
+                + resize(signed(biasIn_q), sumPEs'length));
 
         errorOut <= peErrorDetectArray(31) OR peErrorDetectArray(30) OR peErrorDetectArray(29) 
                     OR peErrorDetectArray(28) OR peErrorDetectArray(27) OR peErrorDetectArray(26)   
@@ -139,9 +140,13 @@ begin
         if(reset = '1') then
             imageIn_p <= (others => '0');
             activation_p <= '0';
+            peOutputArray <= (others => '0');
+            biasIn_q <= (others => '0');
         elsif(clk'event and clk = '1') then
             imageIn_p <= imageIn_f;
             activation_p <= activation_f;
+            peOutputArray <= peOutputArray_q;
+            biasIn_q <= biasIn;
         end if;
     end process;
 
@@ -168,8 +173,12 @@ begin
                          end if;
                          done_f <= '0';
                          counter_f <= (others => '0');
+
+            when Proc => next_s <= Proc2;
+                         done_f <= '0';
+                         counter_f <= (others => '0');
             
-            when Proc => next_s <= EndP;
+            when Proc2 => next_s <= EndP;
                          done_f <= '1';
                          counter_f <= (others => '0');
 
