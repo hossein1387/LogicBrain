@@ -3,10 +3,10 @@
 module neuralcore
     #(
         parameter DATA_WIDTH           = 8,
-        parameter DATA_ADDR_WIDTH      = 10,
-        parameter IMAGE_ROW_LEN        = 32,
-        parameter IMAGE_COL_LEN        = 32,
-        parameter KERNEL_SIZE          = 3,
+        parameter DATA_ADDR_WIDTH      = 14,
+        parameter IMAGE_ROW_LEN        = 200,
+        parameter IMAGE_COL_LEN        = 60,
+        parameter KERNEL_SIZE          = 16,
         parameter STRIDE               = 1,
         parameter NUM_NEURONS_L1       = 1024,
         parameter NUM_NEURONS_L2       = 64,
@@ -17,23 +17,24 @@ module neuralcore
         parameter INPUT_DATA_WIDTH_L3  = 64,
         parameter OUTPUT_DATA_WIDTH    = 10,
         parameter WEIGHT_DATA_WIDTH    = 2,
-        parameter WEIGHT_DATA_WIDTH_L1 = INPUT_DATA_WIDTH_L1*WEIGHT_DATA_WIDTH,
-        parameter WEIGHT_DATA_WIDTH_L2 = INPUT_DATA_WIDTH_L2*WEIGHT_DATA_WIDTH,
-        parameter WEIGHT_DATA_WIDTH_L3 = INPUT_DATA_WIDTH_L3*WEIGHT_DATA_WIDTH,
-        parameter WEIGHT_ADDR_WIDTH_L1 = $clog2(INPUT_DATA_WIDTH_L1*INPUT_DATA_WIDTH_L2+1),
-        parameter WEIGHT_ADDR_WIDTH_L2 = $clog2(INPUT_DATA_WIDTH_L2*INPUT_DATA_WIDTH_L3+1),
-        parameter WEIGHT_ADDR_WIDTH_L3 = $clog2(INPUT_DATA_WIDTH_L3*NUM_OUTPUT_CLASSES+1),
+        parameter WEIGHT_DATA_WIDTH_L1 = 512,
+        parameter WEIGHT_DATA_WIDTH_L2 = 2048,
+        parameter WEIGHT_DATA_WIDTH_L3 = 128,
+        parameter WEIGHT_ADDR_WIDTH_L1 = 11,
+        parameter WEIGHT_ADDR_WIDTH_L2 = 7,
+        parameter WEIGHT_ADDR_WIDTH_L3 = 4,
         parameter BIAS_DATA_WIDTH      = 2,
-        parameter BIAS_DATA_WIDTH_L1   = BIAS_DATA_WIDTH,
-        parameter BIAS_DATA_WIDTH_L2   = BIAS_DATA_WIDTH,
-        parameter BIAS_DATA_WIDTH_L3   = BIAS_DATA_WIDTH,
-        parameter BIAS_ADDR_WIDTH_L1   = $clog2(INPUT_DATA_WIDTH_L2+1),
-        parameter BIAS_ADDR_WIDTH_L2   = $clog2(INPUT_DATA_WIDTH_L3+1),
-        parameter BIAS_ADDR_WIDTH_L3   = $clog2(NUM_OUTPUT_CLASSES+1)
+        parameter BIAS_DATA_WIDTH_L1   = 2,
+        parameter BIAS_DATA_WIDTH_L2   = 2,
+        parameter BIAS_DATA_WIDTH_L3   = 2,
+        parameter BIAS_ADDR_WIDTH_L1   = 11,
+        parameter BIAS_ADDR_WIDTH_L2   = 7,
+        parameter BIAS_ADDR_WIDTH_L3   = 4
     )
     (
         input  logic clk,
         input  logic rst,
+        input  logic slide,
 
         // Window Slider interface
         input  logic                              ws_start     ,
@@ -93,7 +94,7 @@ module neuralcore
                                 .ram_r_data(ws_ram_r_data),
                                 .ram_r_wen (ws_ram_r_wen ),
                                 .start     (ws_start     ),
-                                .slide     (valid_3      ),
+                                .slide     (slide        ),
                                 .y_out     (image_window ),
                                 .valid     (ws_valid     )
                             );

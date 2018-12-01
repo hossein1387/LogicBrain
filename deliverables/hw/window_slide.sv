@@ -21,20 +21,20 @@ module window_slide
     localparam IMAGE_SIZE         = IMAGE_ROW_LEN*IMAGE_COL_LEN;
     localparam PIPELINE_PIXEL_MAX = IMAGE_COL_LEN*(KERNEL_SIZE-1) + KERNEL_SIZE;
 `ifdef USING_KERNEL_2
-    logic lbuf_out;
+    wire lbuf_out;
 `else 
-    logic lbuf_out  [KERNEL_SIZE-2:0];
+    wire lbuf_out  [KERNEL_SIZE-2:0];
 `endif
-    logic  [KERNEL_SIZE*KERNEL_SIZE-1:0] x_buf;
+    reg  [KERNEL_SIZE*KERNEL_SIZE-1:0] x_buf;
 
 // Signals to detect image boundary
-    logic                     new_image_line;
-    logic [31:0]              pixel_cnt, col_pixel_cnt, row_pixel_cnt;
+    reg                     new_image_line;
+    reg [31:0]              pixel_cnt, col_pixel_cnt, row_pixel_cnt;
 // Signals to detect correct stride
-    logic                     col_stride_ok;
-    logic                     row_stride_ok;
-    logic [31:0]              col_stride_cnt;
-    logic [31:0]              row_stride_cnt;
+    reg                     col_stride_ok;
+    reg                     row_stride_ok;
+    reg [31:0]              col_stride_cnt;
+    reg [31:0]              row_stride_cnt;
 //==================================================================================================
 // Circuit to instantiate line buffers based on the kernel size
 `ifdef USING_KERNEL_2
@@ -44,7 +44,7 @@ module window_slide
     genvar lbf_cnt;
     generate
         // line buffer builder
-        for ( lbf_cnt = 0; lbf_cnt < KERNEL_SIZE-1; lbf_cnt++) begin
+        for ( lbf_cnt = 0; lbf_cnt < KERNEL_SIZE-1; lbf_cnt++) begin : line_buffer_element
             line_buffer #( .DEPTH_SIZE  (IMAGE_COL_LEN-KERNEL_SIZE))
             line_buffer_inst(.clk(clk), .rst(rst), .x_in(x_buf[(lbf_cnt+1)*KERNEL_SIZE-1]), .y_out(lbuf_out[lbf_cnt]));
         end
@@ -85,15 +85,13 @@ module window_slide
 
 //==================================================================================================
 // Circuit to detect image boundary
-    always @(posedge clk) begin
+    always_ff @(posedge clk or negedge rst) begin
         if(~rst) begin
-            pixel_cnt      <= {32{1'b1}};
-            col_pixel_cnt  <= 32'b1;
-            row_pixel_cnt  <= 32'b1;
+            pixel_cnt <= {32{1'b1}};
+            col_pixel_cnt <= 32'b1;
+            row_pixel_cnt <= 32'b1;
             row_stride_cnt <= KERNEL_SIZE;
             col_stride_cnt <= KERNEL_SIZE;
-            done           <= 0;
-            new_image_line <= 0;
         end else begin
             if(start==1'b1) begin
                 pixel_cnt <= 32'b1;
@@ -101,35 +99,33 @@ module window_slide
                 if(pixel_cnt + 1 < IMAGE_SIZE + 1 && pixel_cnt<{32{1'b1}}) begin
                     pixel_cnt     <= pixel_cnt + 1;
                     col_pixel_cnt <= col_pixel_cnt + 1;
-                    row_stride_cnt <= KERNEL_SIZE;
-                    col_stride_cnt <= KERNEL_SIZE;
                 end else begin
                     pixel_cnt <= {32{1'b1}};
-                    col_pixel_cnt  <= 32'b1;
-                    row_pixel_cnt  <= 32'b1;
+                    col_pixel_cnt <= 32'b1;
+                    row_pixel_cnt <= 32'b1;
                     row_stride_cnt <= KERNEL_SIZE;
                     col_stride_cnt <= KERNEL_SIZE;
                 end
             end
-            if(col_stride_cnt==col_pixel_cnt) begin
-                if (col_stride_cnt + STRIDE > IMAGE_COL_LEN) begin
-                    col_stride_cnt <= KERNEL_SIZE;
-                end else begin
-                    col_stride_cnt <= col_stride_cnt + STRIDE;
-                end
-            end
-            if (col_pixel_cnt == IMAGE_COL_LEN) begin
-                col_pixel_cnt  <= 32'b1;
-                row_pixel_cnt  <= row_pixel_cnt + 1;
-                if(row_stride_cnt==row_pixel_cnt) begin
-                    row_stride_cnt <= row_stride_cnt + STRIDE;
-                end
-                if (row_pixel_cnt == IMAGE_ROW_LEN ) begin
-                    row_pixel_cnt <= 32'b1;
-                end
-            end
-            done          <= (pixel_cnt==IMAGE_SIZE) ? 1'b1 : 1'b0;
-            new_image_line<= (col_pixel_cnt == IMAGE_COL_LEN)? 1'b1 : 1'b0;
+			  if(col_stride_cnt==col_pixel_cnt) begin
+					if (col_stride_cnt + STRIDE > IMAGE_COL_LEN) begin
+						 col_stride_cnt <= KERNEL_SIZE;
+					end else begin
+						 col_stride_cnt <= col_stride_cnt + STRIDE;
+					end
+			  end
+			  if (col_pixel_cnt == IMAGE_COL_LEN) begin
+					col_pixel_cnt  <= 32'b1;
+					row_pixel_cnt  <= row_pixel_cnt + 1;
+					if(row_stride_cnt==row_pixel_cnt) begin
+						 row_stride_cnt <= row_stride_cnt + STRIDE;
+					end
+					if (row_pixel_cnt == IMAGE_ROW_LEN ) begin
+						 row_pixel_cnt <= 32'b1;
+					end
+			  end
+			  done          <= (pixel_cnt==IMAGE_SIZE) ? 1'b1 : 1'b0;
+			  new_image_line<= (col_pixel_cnt == IMAGE_COL_LEN)? 1'b1 : 1'b0;
         end
     end
 
