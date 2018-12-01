@@ -126,7 +126,7 @@ module neuralcore_tester;
         .BIAS_ADDR_WIDTH_L2  (BIAS_ADDR_WIDTH_L2  ),
         .BIAS_ADDR_WIDTH_L3  (BIAS_ADDR_WIDTH_L3  )
     )
-    neuralcore_inst
+    neural_core_inst
     (
         .clk           (clk             ),
         .rst           (rst             ),

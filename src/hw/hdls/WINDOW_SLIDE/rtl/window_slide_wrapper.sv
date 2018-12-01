@@ -54,7 +54,6 @@ module window_slide_wrapper
             ram_r_addr   <= 0;
             ram_r_wen    <= 1'b0;
             done         <= 1'b0;
-            ret_state    <= IDLE;
         end else begin
             case (next_state)
                 IDLE : begin
@@ -126,9 +125,7 @@ module window_slide_wrapper
         end
     end
 
-    // always_ff @(posedge clk) begin
-    //     $display("state=%d, start=%d\n", next_state, start);
-    // end
     assign valid = ws_clk & done;
+    
 
 endmodule
