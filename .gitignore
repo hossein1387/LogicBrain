@@ -10,3 +10,6 @@
 *.vcd
 *._*
 __pycache__
+*.gch
+.Xil/
+*.txt
