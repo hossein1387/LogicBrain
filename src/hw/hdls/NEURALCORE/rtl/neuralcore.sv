@@ -34,6 +34,7 @@ module neuralcore
     (
         input  logic clk,
         input  logic rst,
+        input  logic slide,
 
         // Window Slider interface
         input  logic                              ws_start     ,
@@ -93,7 +94,7 @@ module neuralcore
                                 .ram_r_data(ws_ram_r_data),
                                 .ram_r_wen (ws_ram_r_wen ),
                                 .start     (ws_start     ),
-                                .slide     (valid_3      ),
+                                .slide     (slide        ),
                                 .y_out     (image_window ),
                                 .valid     (ws_valid     )
                             );
