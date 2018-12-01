@@ -13,4 +13,5 @@
 ../rtl/true_dual_port_ram.sv
 ../rtl/window_slide.sv
 ../rtl/window_slide_wrapper.sv
+../rtl/mega_ram.sv
 ../tb/neuralcore_tester.sv
