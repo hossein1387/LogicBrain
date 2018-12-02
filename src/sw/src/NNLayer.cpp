@@ -117,8 +117,8 @@ void NNLayer::demo_init(int layer, int new_n_input, int new_n_neuron) {
         }
     }
     this->layer_num = layer;
-    sprintf(weight_file_name, "weight_l%0d.txt", layer);
-    sprintf(bias_file_name, "bias_l%0d.txt", layer);
+    sprintf(weight_file_name, "orig_weight_l%0d.txt", layer);
+    sprintf(bias_file_name, "orig_bias_l%0d.txt", layer);
 }
 
 int vector_weight(int x) {

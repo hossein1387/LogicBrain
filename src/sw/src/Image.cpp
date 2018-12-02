@@ -10,6 +10,12 @@
 #include "stdio.h"
 #include <iostream>
 #include <fstream>
+#include <string.h>
+#include <stdlib.h>
+#include <iostream>
+#include <bitset>
+#include <string>
+
 
 Image::Image() {
     // TODO Auto-generated constructor stub
@@ -115,20 +121,21 @@ void Image::make_bw() {
  *******************************************************/
 void Image::apply_NN(NN * network, int size) {
     char output_file_name[50];
-    sprintf(output_file_name, "output.txt");
+    sprintf(output_file_name, "orig_output.txt");
     std::ofstream output_file;
-    out_array.open(output_file_name);
+    output_file.open(output_file_name);
 
     float source[size*size];
     Image * result = new Image(length-size+1,height-size+1);
     int cnt = 0;
     int out_array[(length-size+1)*(height-size+1)];
+    memset(out_array, 0, sizeof(int)*(length-size+1)*(height-size+1));
 
     for (int k = 0; k < 10; ++k)
     {
         cnt = 0;
         for (int y=0; y<=height-size; y++) {
-            printf("Processing line %i\r\n",y);
+            // printf("Processing line %i\r\n",y);
             for (int x=0; x<=length-size; x++) {
                 /* Appliquer le reseau sur un sous-bloc de l'image */
                 for (int j=0; j<size; j++) {
@@ -142,7 +149,13 @@ void Image::apply_NN(NN * network, int size) {
                 unsigned char pixel;
                 pixel = 255*(network->layer[network->n_layer-1].value[k]);
                 *(result->source_pixel(x,y)) = pixel;
-                out_array[cnt] = out_array[cnt]<<1 + pixel;
+                pixel = (pixel==255) ? 1 : 0;
+                out_array[cnt] = (out_array[cnt]<<1 & 0xFFFFFFFE) + pixel;
+                // printf("cnt=%0d\n", cnt);
+                // if (cnt==(length-size+1)*(height-size+1)-1)
+                // {
+                //     printf("%0d\n", out_array[cnt]);
+                // }
                 cnt++;
             }
         }
@@ -151,7 +164,9 @@ void Image::apply_NN(NN * network, int size) {
     for(int i=0; i<(length-size+1)*(height-size+1); i ++)
     {
         char str_tmp[50];
-        sprintf(str_tmp, "%d\n", out_array[i]);
+        std::string binary = std::bitset<10>(out_array[i]).to_string();
+        // printf("%u\n", out_array[i]);
+        sprintf(str_tmp, "%s\n", binary.c_str());
         output_file << str_tmp;
     }
     output_file.close();
@@ -176,17 +191,42 @@ Image::~Image() {
     if (source_array != 0) delete[] source_array;
 }
 
-void Image::save_image()
+void Image::zero_pad(int desired_height, int desired_width)
 {
-    char image_file_name[50];
-    sprintf(image_file_name, "image.txt");
+    unsigned char* new_source_array;
+    new_source_array = new unsigned char [desired_height*desired_width];
+    for(int i=0; i<desired_width; i++) {
+        for(int j=0; j<desired_height; j++) {
+            if(i<length && j<height){
+                *(new_source_array + (j*desired_width+i)) = *source_pixel(i, j);
+            } else{
+                *(new_source_array + (j*desired_width+i)) = 0;
+            }
+        }
+    }
+    if (source_array != 0) delete[] source_array;
+
+    height = desired_height;
+    length = desired_width;
+    source_array = new unsigned char [height*length];
+    for(int i=0; i<desired_width; i++) {
+        for(int j=0; j<desired_height; j++) {
+            *source_pixel(i,j) = *(new_source_array + (j*desired_width+i));
+        }
+    }
+    if (source_array != 0) delete[] new_source_array;
+}
+
+void Image::save_image(const char* image_file_name="orig_image.txt")
+{
     std::ofstream image_file;
     image_file.open (image_file_name);
     for(int i=0; i<length*height; i++)
     {
         // printf("%0.0f\n", weight[i]);
+        int val = (source_array[i]==255) ? 1 : 0;
         char str_tmp[50];
-        sprintf(str_tmp, "%d\n", source_array[i]);
+        sprintf(str_tmp, "%d\n", val);
         image_file << str_tmp;
     }
     image_file.close();

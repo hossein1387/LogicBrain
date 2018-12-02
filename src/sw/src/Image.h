@@ -25,9 +25,10 @@ public:
     unsigned char * source_pixel(int x, int y);
     void make_bw();
     void apply_NN(NN * network, int size);
+    void zero_pad(int desired_height, int desired_width);
     void print();
     ~Image();
-    void save_image();
+    void save_image(const char* image_file_name);
 
     int height;
     int length;
