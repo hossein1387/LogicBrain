@@ -24,7 +24,7 @@ public:
 
     unsigned char * source_pixel(int x, int y);
     void make_bw();
-    Image * apply_NN(NN * network, int size, int pos);
+    void apply_NN(NN * network, int size);
     void print();
     ~Image();
     void save_image();

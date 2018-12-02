@@ -6,7 +6,7 @@ entity AccelCoreL1 is
 port (
     weightIn: in STD_LOGIC_VECTOR(511 downto 0);
     imageIn:  in STD_LOGIC_VECTOR(255 downto 0);
-    biasIn:   in STD_LOGIC_VECTOR(1 downto 0);
+    biasIn:   in STD_LOGIC_VECTOR(4 downto 0);
     start:    in STD_LOGIC;
     clk:      in STD_LOGIC;
     reset:    in STD_LOGIC;
@@ -38,7 +38,7 @@ architecture rtl of AccelCoreL1 is
     signal imageIn_p:  STD_LOGIC_VECTOR(255 downto 0);
     signal imageIn_f:  STD_LOGIC_VECTOR(255 downto 0);
     signal peOutputArray, peOutputArray_q: STD_LOGIC_VECTOR(159 downto 0);
-    signal biasIn_q: STD_LOGIC_VECTOR(1 downto 0);
+    signal biasIn_q: STD_LOGIC_VECTOR(4 downto 0);
     signal peErrorDetectArray: STD_LOGIC_VECTOR(31 downto 0);
     signal sumPEs:     STD_LOGIC_VECTOR(31 downto 0);
     signal activation_p: STD_LOGIC;

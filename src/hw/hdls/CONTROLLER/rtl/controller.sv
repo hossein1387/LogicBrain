@@ -11,9 +11,9 @@ module controller
         parameter WEIGHT_ADDR_WIDTH_L1 = 10,
         parameter WEIGHT_ADDR_WIDTH_L2 = 10,
         parameter WEIGHT_ADDR_WIDTH_L3 = 10,
-        parameter BIAS_DATA_WIDTH_L1   = 2,
-        parameter BIAS_DATA_WIDTH_L2   = 2,
-        parameter BIAS_DATA_WIDTH_L3   = 2,
+        parameter BIAS_DATA_WIDTH_L1   = 5,
+        parameter BIAS_DATA_WIDTH_L2   = 5,
+        parameter BIAS_DATA_WIDTH_L3   = 5,
         parameter BIAS_ADDR_WIDTH_L1   = 10,
         parameter BIAS_ADDR_WIDTH_L2   = 10,
         parameter BIAS_ADDR_WIDTH_L3   = 10

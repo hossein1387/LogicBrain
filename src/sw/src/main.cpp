@@ -46,9 +46,7 @@ int main(int argc, char **argv)
     my_image.save_image();
     printf("Start processing ...");
 
-    // for (int i=0;i<10;i++) {
-    //     Image * result_image = my_image.apply_NN(&network, matrix_size, i);
-    // }
+    Image * result_image = my_image.apply_NN(&network, matrix_size);
 
     return 0;
 }

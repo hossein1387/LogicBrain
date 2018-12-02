@@ -9,11 +9,11 @@ port (
     start:    in STD_LOGIC;
     W1:       in STD_LOGIC_VECTOR(511 downto 0);
     I1:       in STD_LOGIC_VECTOR(255 downto 0);
-    b1:       in STD_LOGIC_VECTOR(1 downto 0);
+    b1:       in STD_LOGIC_VECTOR(4 downto 0);
     W2:       in STD_LOGIC_VECTOR(2047 downto 0);
-    b2:       in STD_LOGIC_VECTOR(1 downto 0);
+    b2:       in STD_LOGIC_VECTOR(4 downto 0);
     W3:       in STD_LOGIC_VECTOR(127 downto 0);
-    b3:       in STD_LOGIC_VECTOR(1 downto 0);
+    b3:       in STD_LOGIC_VECTOR(4 downto 0);
     valid_1:  out STD_LOGIC;
     valid_2:  out STD_LOGIC;
     valid_3:  out STD_LOGIC;
@@ -28,7 +28,7 @@ architecture rtl of CalculatorUnit is
     port(
         weightIn: in STD_LOGIC_VECTOR(511 downto 0);
         imageIn:  in STD_LOGIC_VECTOR(255 downto 0);
-        biasIn:   in STD_LOGIC_VECTOR(1 downto 0);
+        biasIn:   in STD_LOGIC_VECTOR(4 downto 0);
         start:    in STD_LOGIC;
         clk:      in STD_LOGIC;
         reset:    in STD_LOGIC;
@@ -42,7 +42,7 @@ architecture rtl of CalculatorUnit is
     port(
         weightIn: in STD_LOGIC_VECTOR(2047 downto 0);
         imageIn:  in STD_LOGIC_VECTOR(1023 downto 0);
-        biasIn:   in STD_LOGIC_VECTOR(1 downto 0);
+        biasIn:   in STD_LOGIC_VECTOR(4 downto 0);
         start:    in STD_LOGIC;
         clk:      in STD_LOGIC;
         reset:    in STD_LOGIC;
@@ -56,7 +56,7 @@ architecture rtl of CalculatorUnit is
     port(
         weightIn: in STD_LOGIC_VECTOR(127 downto 0);
         imageIn:  in STD_LOGIC_VECTOR(63 downto 0);
-        biasIn:   in STD_LOGIC_VECTOR(1 downto 0);
+        biasIn:   in STD_LOGIC_VECTOR(4 downto 0);
         start:    in STD_LOGIC;
         clk:      in STD_LOGIC;
         reset:    in STD_LOGIC;

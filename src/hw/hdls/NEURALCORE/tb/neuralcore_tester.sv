@@ -27,7 +27,7 @@ module neuralcore_tester;
     localparam WEIGHT_ADDR_WIDTH_L1 = $clog2(INPUT_DATA_WIDTH_L2+1);
     localparam WEIGHT_ADDR_WIDTH_L2 = $clog2(INPUT_DATA_WIDTH_L3+1);
     localparam WEIGHT_ADDR_WIDTH_L3 = $clog2(NUM_OUTPUT_CLASSES+1);
-    localparam BIAS_DATA_WIDTH      = 2;
+    localparam BIAS_DATA_WIDTH      = 5;
     localparam BIAS_DATA_WIDTH_L1   = BIAS_DATA_WIDTH;
     localparam BIAS_DATA_WIDTH_L2   = BIAS_DATA_WIDTH;
     localparam BIAS_DATA_WIDTH_L3   = BIAS_DATA_WIDTH;
@@ -42,6 +42,7 @@ module neuralcore_tester;
     logic                              clk           ;
     logic                              rst           ;
     logic                              ws_start      ;
+    logic                              slide         ;
 
     logic      [DATA_ADDR_WIDTH-1 : 0] ws_ram_r_addr ;
     logic           [DATA_WIDTH-1 : 0] ws_ram_r_data ;
@@ -130,6 +131,7 @@ module neuralcore_tester;
     (
         .clk           (clk             ),
         .rst           (rst             ),
+        .slide         (slide           ),
         .ws_start      (ws_start        ),
         .ws_ram_r_addr (ws_ram_r_addr   ),
         .ws_ram_r_data (ws_ram_r_data   ),
@@ -231,10 +233,16 @@ module neuralcore_tester;
         static int file_id  = 0;
         file_id = $fopen(OUTPUT_VALUES, "w");
         while(1) begin
+            slide = 0;
             @(posedge done)
             `test_print("INFO", $sformatf("[%4d] out=%b", out_cnt, calcOutput), VERB_LOW)
             $fwrite(file_id,"%b\n", calcOutput);
+            @(posedge clk);
+            @(posedge clk);
+            @(posedge clk);
+            slide = 1;
             out_cnt += 1;
+            @(posedge clk);
         end
     end
 
