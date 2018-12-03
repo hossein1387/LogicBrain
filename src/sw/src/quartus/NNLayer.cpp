@@ -1,0 +1,304 @@
+/*
+ * NNLayer.cpp
+ *
+ *  Created on: Jul 11, 2013
+ *      Author: jpdavid
+ */
+
+#include "NNLayer.h"
+#include "math.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "Image.h"
+
+
+#define MAKE_TERNARY_THRESHOLD 0.3
+
+NNLayer::NNLayer() {
+    // TODO Auto-generated constructor stub
+    n_input = 0;
+    n_neuron = 0;
+    bias = 0;
+    weight = 0;
+    value = 0;
+}
+
+NNLayer::NNLayer(int new_n_input, int new_n_neuron) {
+    // TODO Auto-generated constructor stub
+    init(new_n_input, new_n_neuron);
+}
+
+void NNLayer::init(int new_n_input, int new_n_neuron) {
+    // TODO Auto-generated constructor stub
+    n_input = new_n_input;
+    n_neuron = new_n_neuron;
+
+    bias = new BYTE[n_neuron];
+
+    weight = new BYTE[n_neuron*n_input];
+    value = new BYTE[n_neuron];
+}
+
+int MYrand() {
+    static unsigned long seed=0x1234567;
+    seed = seed * 3196829161;
+    return seed >> 1;
+}
+
+float NNLayer::rand_FloatRange(float a, float b) {
+    return ((b-a)*((float)MYrand()/0x7FFFFFFF))+a;
+}
+
+BYTE NNLayer::makeTernaryExtra(float fvalue){
+    if (fvalue >= 0.4) {
+        return 1;
+    } else if(fvalue <=-0.4){
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+void NNLayer::random_init(int new_n_input, int new_n_neuron) {
+    // TODO Auto-generated constructor stub
+    init(new_n_input, new_n_neuron);
+
+    bias = new BYTE[n_neuron];
+
+    BYTE * cur_weight = weight;
+    for (int i=0; i<n_neuron; i++) {
+        bias[i] = makeTernaryExtra(rand_FloatRange(-log2(new_n_input),log2(new_n_input)));
+        for (int j=0; j<n_input; j++) {
+            *(cur_weight++) = makeTernaryExtra(rand_FloatRange(-1,1));
+        }
+    }
+}
+
+int get_demo_weight(int layer, int neuron, int input) {
+    unsigned seed=0x1234567;
+    unsigned state = seed + ((layer * 1031)+neuron)*1031+input;
+
+    for (int i=0;i<32;i++) {
+        unsigned low = state & 0xFFFF;
+        unsigned high = state >> 16;
+        low+=(high * 0x158F);
+        low &= 0xFFFF;
+        state = (low <<17) + (high <<1) + (low >>15);
+    }
+    state = state&3;
+
+    int result = 0;
+    if (state != 3) result = state-1;
+    return result;
+}
+
+int get_demo_bias(int layer, int neuron, int nb_input) {
+    unsigned long seed=0x1234567;
+    unsigned state = seed + ((layer * 1031) + neuron) * (neuron + 1);
+
+    for (int i=0;i<32;i++) {
+        unsigned low = state & 0xFFFF;
+        unsigned high = state >> 16;
+        low+=(high * 0x158F);
+        low &= 0xFFFF;
+        state = (low <<17) + (high <<1) + (low >>15);
+    }
+    int result = state;
+    if (nb_input>=256) result>>=28;
+    else if (nb_input>=16) result>>=29;
+    else if (nb_input>=4) return result>>=30;
+    else result = 0;
+    return result;
+}
+
+
+
+void NNLayer::demo_init(int layer, int new_n_input, int new_n_neuron) {
+    // TODO Auto-generated constructor stub
+    init(new_n_input, new_n_neuron);
+
+    bias = new BYTE[n_neuron];
+
+    BYTE * cur_weight = weight;
+    for (int i=0; i<n_neuron; i++) {
+
+        bias[i] = get_demo_bias(layer, i, new_n_input);
+        for (int j=0; j<n_input; j++) {
+            *(cur_weight++) = get_demo_weight(layer,i,j);
+
+        }
+    }
+}
+
+
+int vector_weight(int x) {
+    int result = 0;
+    while (x != 0) {
+        if (x & 1) result++;
+        x >>=1;
+    }
+    return result;
+}
+
+void NNLayer::make_ternary() {
+    BYTE * cur_weight = weight;
+    for (int i=0; i<n_neuron; i++) {
+        bias[i] = trunc(bias[i]);
+        for (int j=0; j<n_input; j++) {
+            if (*cur_weight>MAKE_TERNARY_THRESHOLD) *cur_weight = 1;
+            else if (*cur_weight<-MAKE_TERNARY_THRESHOLD) *cur_weight = -1;
+            else *cur_weight = 0;
+            cur_weight++;
+        }
+    }
+}
+
+NNLayer::~NNLayer() {
+    // TODO Auto-generated destructor stub
+}
+
+//Edit this function for ternary logic
+BYTE NNLayer::fct(BYTE x) {
+//  return 1.0/(1.0+exp(-x));
+    if (x>0) return 1;
+    else return 0;
+}
+
+BYTE * NNLayer::propagate(BYTE * source) {
+    // TODO Auto-generated constructor stub
+    BYTE * cur_weight = weight;
+
+    for (int i=0; i<n_neuron; i++) {
+        BYTE acc = bias[i];
+
+        for (int j=0; j<n_input; j++) {
+            acc += *(cur_weight++) * source[j];
+        }
+        value[i] = fct(acc); //Binary result
+    }
+    return value;
+}
+
+void NNLayer::print_activation() {
+    printf("---------------\n");
+    for (int i=0; i<n_neuron; i++) {
+        printf("%i, %i\n", i, (int)value[i]);
+    }
+}
+
+void NNLayer::print() {
+    // TODO Auto-generated constructor stub
+
+    BYTE * cur_weight = weight;
+
+    for (int i=0; i<n_neuron; i++) {
+        printf("Neuron %i: %f, {", i+1, bias[i]);
+        for (int j=0; j<n_input; j++) {
+            if (j!=0) printf(", %2.2f", *(cur_weight++));
+            else printf("%2.2f", *(cur_weight++));
+        }
+        printf("}, %f\r\n",value[i]);
+    }
+}
+
+void NNLayer::save_weights_and_bias()
+{
+    std::ofstream weight_file;
+    weight_file.open (weight_file_name);
+    for(int i=0; i<n_neuron*n_input; i++)
+    {
+        // printf("%0.0f\n", weight[i]);
+        char str_tmp[50];
+        sprintf(str_tmp, "%0.0f\n", weight[i]);
+        weight_file << str_tmp;
+    }
+    weight_file.close();
+
+    std::ofstream bias_file;
+    bias_file.open (bias_file_name);
+    for(int i=0; i<n_neuron; i++)
+    {
+        // printf("%0.0f\n", weight[i]);
+        char str_tmp[50];
+        sprintf(str_tmp, "%0.0f\n", bias[i]);
+        bias_file << str_tmp;
+    }
+    bias_file.close();
+}
+
+
+float* NNLayer::vec_2_dim(float* vec, int x, int y, int len) {
+    return vec + (y*len+x);
+}
+
+void NNLayer::zero_pad(int desired_num_input, int desired_num_neuron)
+{
+    zero_pad_weight(desired_num_input, desired_num_neuron);
+    zero_pad_bias(desired_num_neuron);
+    n_input  = desired_num_input;
+    n_neuron = desired_num_neuron;
+}
+
+
+void NNLayer::zero_pad_bias(int desired_num_neuron)
+{
+    float* new_b;
+    // print();
+    new_b = new float [desired_num_neuron];
+    for(int y=0; y<desired_num_neuron ; y++) {
+        if(y<n_neuron){
+            *(new_b + y) = *(bias + y);
+        } else{
+            *(new_b + y) = 0;
+        }
+    }
+// Copy the new bias 
+    bias = new float [desired_num_neuron];
+    for(int y=0; y<desired_num_neuron; y++) {
+        *(bias + y) = *(new_b + y) ;
+    }
+
+}
+
+void NNLayer::zero_pad_weight(int desired_num_input, int desired_num_neuron)
+{
+    float* new_w;
+    // print();
+    new_w = new float [desired_num_input*desired_num_neuron];
+    for(int y=0; y<desired_num_neuron ; y++) {
+        for(int x=0; x<desired_num_input; x++) {
+            if(y<n_neuron && x<n_input){
+                *(vec_2_dim(new_w, x, y, desired_num_input)) = *vec_2_dim(weight, x, y, n_input);
+                // printf("copying weight(%0d, %0d)\n", y,x);
+            } else{
+                *(vec_2_dim(new_w, x, y, desired_num_input)) = 0;
+            }
+        }
+    }
+
+// Copy the new weight 
+    weight = new float [desired_num_input*desired_num_neuron];
+    for(int y=0; y<desired_num_neuron; y++) {
+        for(int x=0; x<desired_num_input; x++) {
+            *vec_2_dim(weight, x, y, desired_num_input) = *(vec_2_dim(new_w, x, y, desired_num_input)) ;
+        }
+    }
+}
+
+void NNLayer::print_weight_mat()
+{
+    for(int y=0; y<n_neuron; y++) {
+        for(int x=0; x<n_input; x++) {
+            printf("%2.f ", *vec_2_dim(weight, x, y, n_input));
+        }
+        printf("\n");
+    }
+}
+
+void NNLayer::print_bias()
+{
+    for(int y=0; y<n_neuron; y++) {
+            printf("%2.f ", *(bias + y));
+    }
+    printf("\n");
+}
