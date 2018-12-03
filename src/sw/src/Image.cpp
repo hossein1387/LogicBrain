@@ -191,27 +191,32 @@ Image::~Image() {
     if (source_array != 0) delete[] source_array;
 }
 
-void Image::zero_pad(int desired_height, int desired_width)
+unsigned char * Image::new_source_pixel(int x, int y, int len) {
+    return new_source_array + (y*len+x);
+}
+
+void Image::zero_pad(int desired_width, int desired_height)
 {
-    unsigned char* new_source_array;
     new_source_array = new unsigned char [desired_height*desired_width];
-    for(int i=0; i<desired_width; i++) {
-        for(int j=0; j<desired_height; j++) {
-            if(i<length && j<height){
-                *(new_source_array + (j*desired_width+i)) = *source_pixel(i, j);
+    for(int y=0; y<desired_height; y++) {
+        for(int x=0; x<desired_width; x++) {
+            if(y<height && x<length){
+                *(new_source_pixel(x, y, desired_width)) = *source_pixel(x, y);
             } else{
-                *(new_source_array + (j*desired_width+i)) = 0;
+                *(new_source_pixel(x, y, desired_width)) = 0;
             }
+                printf("image(%0d, %0d)\n",y, x );
         }
     }
-    if (source_array != 0) delete[] source_array;
+    // if (source_array != 0) delete[] source_array;
 
     height = desired_height;
     length = desired_width;
-    source_array = new unsigned char [height*length];
-    for(int i=0; i<desired_width; i++) {
-        for(int j=0; j<desired_height; j++) {
-            *source_pixel(i,j) = *(new_source_array + (j*desired_width+i));
+// Copy the new image to source array
+    source_array = new unsigned char [desired_height*desired_width];
+    for(int y=0; y<desired_height; y++) {
+        for(int x=0; x<desired_width; x++) {
+            *source_pixel(x,y) = *new_source_pixel(x, y, desired_width);
         }
     }
     if (source_array != 0) delete[] new_source_array;
@@ -231,5 +236,4 @@ void Image::save_image(const char* image_file_name="orig_image.txt")
     }
     image_file.close();
 }
-
 

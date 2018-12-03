@@ -215,3 +215,80 @@ void NNLayer::save_weights_and_bias()
     }
     bias_file.close();
 }
+
+
+float* NNLayer::vec_2_dim(float* vec, int x, int y, int len) {
+    return vec + (y*len+x);
+}
+
+void NNLayer::zero_pad(int desired_num_input, int desired_num_neuron)
+{
+    zero_pad_weight(desired_num_input, desired_num_neuron);
+    zero_pad_bias(desired_num_neuron);
+    n_input  = desired_num_input;
+    n_neuron = desired_num_neuron;
+}
+
+
+void NNLayer::zero_pad_bias(int desired_num_neuron)
+{
+    float* new_b;
+    // print();
+    new_b = new float [desired_num_neuron];
+    for(int y=0; y<desired_num_neuron ; y++) {
+        if(y<n_neuron){
+            *(new_b + y) = *(bias + y);
+        } else{
+            *(new_b + y) = 0;
+        }
+    }
+// Copy the new bias 
+    bias = new float [desired_num_neuron];
+    for(int y=0; y<desired_num_neuron; y++) {
+        *(bias + y) = *(new_b + y) ;
+    }
+
+}
+
+void NNLayer::zero_pad_weight(int desired_num_input, int desired_num_neuron)
+{
+    float* new_w;
+    // print();
+    new_w = new float [desired_num_input*desired_num_neuron];
+    for(int y=0; y<desired_num_neuron ; y++) {
+        for(int x=0; x<desired_num_input; x++) {
+            if(y<n_neuron && x<n_input){
+                *(vec_2_dim(new_w, x, y, desired_num_input)) = *vec_2_dim(weight, x, y, n_input);
+                // printf("copying weight(%0d, %0d)\n", y,x);
+            } else{
+                *(vec_2_dim(new_w, x, y, desired_num_input)) = 0;
+            }
+        }
+    }
+
+// Copy the new weight 
+    weight = new float [desired_num_input*desired_num_neuron];
+    for(int y=0; y<desired_num_neuron; y++) {
+        for(int x=0; x<desired_num_input; x++) {
+            *vec_2_dim(weight, x, y, desired_num_input) = *(vec_2_dim(new_w, x, y, desired_num_input)) ;
+        }
+    }
+}
+
+void NNLayer::print_weight_mat()
+{
+    for(int y=0; y<n_neuron; y++) {
+        for(int x=0; x<n_input; x++) {
+            printf("%2.f ", *vec_2_dim(weight, x, y, n_input));
+        }
+        printf("\n");
+    }
+}
+
+void NNLayer::print_bias()
+{
+    for(int y=0; y<n_neuron; y++) {
+            printf("%2.f ", *(bias + y));
+    }
+    printf("\n");
+}

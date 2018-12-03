@@ -23,6 +23,7 @@ public:
     void make_fractal();
 
     unsigned char * source_pixel(int x, int y);
+    unsigned char * new_source_pixel(int x, int y, int len);
     void make_bw();
     void apply_NN(NN * network, int size);
     void zero_pad(int desired_height, int desired_width);
@@ -33,6 +34,7 @@ public:
     int height;
     int length;
     unsigned char *source_array;
+    unsigned char *new_source_array;
 };
 
 #endif /* IMAGE_H_ */

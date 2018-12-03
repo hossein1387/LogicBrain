@@ -35,10 +35,16 @@ public:
 
     void print();
     int layer_num;
+    void print_weight_mat();
+    void print_bias();
+    void zero_pad(int desired_num_input, int desired_num_neuron);
 
 private:
     char weight_file_name[50];
     char bias_file_name[50];
+    float* vec_2_dim(float* vec, int x, int y, int len);
+    void zero_pad_weight(int desired_num_input, int desired_num_neuron);
+    void zero_pad_bias(int desired_num_neuron);
 
 };
 

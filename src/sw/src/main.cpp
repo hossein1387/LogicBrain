@@ -35,18 +35,20 @@ int main(int argc, char **argv)
     network.layer[0].demo_init(0, matrix_size*matrix_size, 40);network.layer[0].make_ternary();
     network.layer[1].demo_init(1, 40, 40);network.layer[1].make_ternary();
     network.layer[2].demo_init(2, 40, 10);network.layer[2].make_ternary();
-
-    network.layer[0].save_weights_and_bias();
-    network.layer[1].save_weights_and_bias();
-    network.layer[2].save_weights_and_bias();
+    // network.layer[0].zero_pad(256  , 1024);
+    // network.layer[1].zero_pad(1024 , 64  );
+    // network.layer[2].zero_pad(64   , 10. );
+    // network.layer[0].save_weights_and_bias();
+    // network.layer[1].save_weights_and_bias();
+    // network.layer[2].save_weights_and_bias();
 
     Image my_image(60,200);
     my_image.make_fractal();
     my_image.make_bw();
-    my_image.save_image();
+    my_image.save_image("orig_out.txt");
     printf("Start processing ...");
 
-    Image * result_image = my_image.apply_NN(&network, matrix_size);
+    my_image.apply_NN(&network, matrix_size);
 
     return 0;
 }
