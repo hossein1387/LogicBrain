@@ -77,22 +77,12 @@ if __name__ == '__main__':
         proj_dir = os.getcwd() + "/" + path_for_proj + project_name
     else:
         proj_dir = path_for_proj + project_name
-    script_dir = path_fpga + "scripts/do_test.py"
-    util_dir   = path_fpga + "utils/utils.sv"
-    check_for_file(script_dir)
-    check_for_file(util_dir)
     # import ipdb as pdb; pdb.set_trace()
     command = "mkdir {0}".format(project_name)
     run_command(command)
     command = "cd {0}".format(proj_dir)
-    script_dir = "../../{0}".format(script_dir)
-    util_dir = "../../{0}".format(util_dir)
     run_command(command)
     command = "mkdir {0}/docs {0}/results {0}/rtl {0}/scripts {0}/sw {0}/tb".format(proj_dir)
-    run_command(command)
-    command = "ln -s {0} {1}/scripts/".format(script_dir, proj_dir)
-    run_command(command)
-    command = "ln -s {0} {1}/tb/".format(util_dir, proj_dir)
     run_command(command)
     command = "touch {0}/rtl/{1}.sv".format(proj_dir, project_name.lower())
     run_command(command)

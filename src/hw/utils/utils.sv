@@ -32,8 +32,8 @@ typedef struct packed
 // Defines a macro to print 
 `define test_print(ID,MSG,VERBOSITY) \
    begin \
-     if (VERBOSITY<VERB_MEDIUM) \
-       $display("[%5s]  %s ", ID, MSG); \
+        if (VERBOSITY<VERB_MEDIUM) \
+            $display("[%5s]  %s ", ID, MSG); \
    end
 
 //==================================================================================================
@@ -41,10 +41,30 @@ typedef struct packed
 // Defines a macro to print a banner that bolds the msg
 `define print_banner(ID,MSG,VERBOSITY) \
    begin \
-      `test_print(ID,"=======================================================================",VERBOSITY) \
-      `test_print(ID,MSG,VERBOSITY) \
-      `test_print(ID,"=======================================================================",VERBOSITY) \
+        `test_print(ID,"=======================================================================",VERBOSITY) \
+        `test_print(ID,MSG,VERBOSITY) \
+        `test_print(ID,"=======================================================================",VERBOSITY) \
    end
+
+//==================================================================================================
+// Macro to set bits of a vector t
+`define set_bits(vector, number_of_bits, val)\
+    begin \
+        for (int i = 0; i < number_of_bits; i++) begin\
+            vector[i] = val;\
+        end\
+    end
+
+//==================================================================================================
+// Macro to set bits of a vector t
+`define set_bits_mat(mat, number_of_rows, number_of_cols, val)\
+    begin \
+        for (int j = 0; j < number_of_rows; j++) begin\
+            for (int i = 0; i < number_of_cols; i++) begin\
+                mat[j][i] = val;\
+            end\
+        end\
+    end
 
 //==================================================================================================
 // A function to report results
@@ -57,9 +77,9 @@ endfunction : print_result
 
 //==================================================================================================
 // Given the size of a matrix and an input array, this function prints array in matrix format 
-function void print_matrix_from_array(inout int array, int row_len, int col_len);
-    string array_shape_str = "";
-    int elcnt = 0;
+function void print_matrix_from_array(inout integer array, integer row_len, integer col_len);
+    static string array_shape_str = "";
+    static int elcnt = 0;
     for (int rows=0; rows<row_len; rows++) begin
         for(int cols=0; cols<col_len; cols++) begin
             array_shape_str = {array_shape_str, $sformatf("%2h ",array[elcnt])};
