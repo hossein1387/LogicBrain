@@ -39,7 +39,7 @@ def load_output_txt(file, image_to_decode=NUM_IMAGES_TO_DECODE, image_height=OUT
     return images
 
 def gen_vga_img(imgs, output_filename, image_to_decode=NUM_IMAGES_TO_DECODE, image_height=OUTPUT_IMG_HEIGHT, image_width=OUTPUT_IMG_WIDTH, spacing=SPACING):
-    out_img = np.ones((VGA_HEIGHT, VGA_WIDTH))
+    out_img = np.zeros((VGA_HEIGHT, VGA_WIDTH))
     # import ipdb as pdb; pdb.set_trace()
     for i in range(0,image_to_decode):
         image = imgs[:, i]
