@@ -32,9 +32,9 @@ int main(int argc, char **argv)
     NN network(3);
     int matrix_size = 16;
 
-    network.layer[0].demo_init(0, matrix_size*matrix_size, 40);network.layer[0].make_ternary();
-    network.layer[1].demo_init(1, 40, 40);network.layer[1].make_ternary();
-    network.layer[2].demo_init(2, 40, 10);network.layer[2].make_ternary();
+    network.layer[0].demo_init(0, matrix_size*matrix_size, 1024);network.layer[0].make_ternary();
+    network.layer[1].demo_init(1, 1024, 64);network.layer[1].make_ternary();
+    network.layer[2].demo_init(2, 64, 10);network.layer[2].make_ternary();
     // network.layer[0].zero_pad(256  , 1024);
     // network.layer[1].zero_pad(1024 , 64  );
     // network.layer[2].zero_pad(64   , 10. );
