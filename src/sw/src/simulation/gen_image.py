@@ -1,1 +1,1 @@
-../scripts/gen_image.py
+../../scripts/gen_image.py
